@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using WindowsOptimizations.Core.Handlers;
-using WindowsOptimizations.Core.Models;
 
 namespace WindowsOptimizations.Core.Patches
 {
@@ -18,7 +17,7 @@ namespace WindowsOptimizations.Core.Patches
             powershell.StartInfo.FileName = "powershell.exe";
             powershell.StartInfo.CreateNoWindow = true;
 
-            foreach (string service in ConfigurationHandler<UnnecessaryServices>.GetTypeValues.WindowsServices)
+            foreach (string service in ConfigurationHandler.UnnecessaryServicesInstance.WindowsServices)
             {
                 powershell.StartInfo.Arguments = $"Set-Service -Name" + $" \"{service}\" " + "-StartupType Manual -Status Stopped";
                 powershell.Start();
