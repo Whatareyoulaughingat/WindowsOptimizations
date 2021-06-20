@@ -1,24 +1,25 @@
 ﻿using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
+using WindowsOptimizations.Core.Models;
 
 namespace WindowsOptimizations.Core.Handlers
 {
     /// <summary>
     /// A handler that manages some files used by this application.
     /// </summary>
-    public class ConfigurationHandler<T> where T : class
+    public class ConfigurationHandler
     {
         /// <summary>
-        /// A generic type used for getting and setting POCOs.
+        /// An instance of <see cref="UnnecessaryServices"/>.
         /// </summary>
-        public static T GetTypeValues { get; set; }
+        public static UnnecessaryServices UnnecessaryServicesInstance { get; set; }
 
         /// <summary>
         /// Serializes a specific file with an appropriate class.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public async Task SerializeAsync(T entity, string filePath)
+        public async Task SerializeAsync(string filePath)
         {
             if (!File.Exists(filePath))
             {
@@ -39,7 +40,7 @@ namespace WindowsOptimizations.Core.Handlers
                 // Serializes the file.
                 await JsonSerializer.SerializeAsync(
                     utf8Json: serializationStream,
-                    value: entity,
+                    value: new UnnecessaryServices(),
                     options: serializationOptions);
 
                 // Setting the position of the stream to 0 otherwise no contents will be written to the file.
@@ -58,7 +59,7 @@ namespace WindowsOptimizations.Core.Handlers
                 bufferSize: 4096,
                 useAsync: true);
 
-            GetTypeValues = await JsonSerializer.DeserializeAsync<T>(derializationStream);
+            UnnecessaryServicesInstance = await JsonSerializer.DeserializeAsync<UnnecessaryServices>(derializationStream);
         }
     }
 }
