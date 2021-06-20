@@ -78,6 +78,7 @@
                 Content="Optimize Network Options"
                 Command="{Binding OptimizeNetworkOptionsCommand}" />
 
+        <!--Reduce CPU processes.-->
         <Button Width="300"
                 Height="30"
                 VerticalAlignment="Top"
