@@ -3,7 +3,6 @@ using System.IO;
 using System.Windows;
 using WindowsOptimizations.Core.GlobalData;
 using WindowsOptimizations.Core.Handlers;
-using WindowsOptimizations.Core.Models;
 
 namespace WindowsOptimizations
 {
@@ -17,8 +16,9 @@ namespace WindowsOptimizations
             Directory.CreateDirectory(Paths.BasePath);
 
             // Serialize/Deserialize the UnnecessaryServices class model.
-            await new ConfigurationHandler<UnnecessaryServices>().SerializeAsync(new UnnecessaryServices(), Paths.UnnecessaryWindowsServicesJsonFile);
-            await new ConfigurationHandler<UnnecessaryServices>().DeserializeAsync(Paths.UnnecessaryWindowsServicesJsonFile);
+            ConfigurationHandler configurationHandler = new();
+            await configurationHandler.SerializeAsync(Paths.UnnecessaryWindowsServicesJsonFile);
+            await configurationHandler.DeserializeAsync(Paths.UnnecessaryWindowsServicesJsonFile);
 
             base.OnStartup(e);
         }
@@ -35,6 +35,7 @@ namespace WindowsOptimizations
             {
             }
 
+            // Show a message prompting the user that a reboot is required (if any of these condition below is true).
             if (PatchExecutionCheck.HasDisabledUnnecessaryWindowsServices || PatchExecutionCheck.HasReducedMouseInputLatency || PatchExecutionCheck.HasOptimizedSystemProfile || PatchExecutionCheck.HasDebloatedWindows || PatchExecutionCheck.HasOptimizedNetworkOptions)
             {
                 MessageBoxResult result = MessageBox.Show("Some changes require a reboot to take effect. Would you like reboot now?", "WindowsOptimizations", MessageBoxButton.YesNo, MessageBoxImage.Information);
