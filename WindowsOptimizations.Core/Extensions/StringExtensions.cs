@@ -8,7 +8,7 @@ namespace WindowsOptimizations.Core.Extensions
         Byte, KB, MB, GB,
     }
 
-    public class IntExtensions
+    public class StringExtensions
     {
         public static string ToSize(long value, SizeUnits unit)
         {
