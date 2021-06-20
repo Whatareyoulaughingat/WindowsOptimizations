@@ -86,6 +86,7 @@ namespace WindowsOptimizations.Core.Tools
                         useAsync: true);
 
                     await httpStream.CopyToAsync(fileStream);
+                }));
 
                 ZipFile.ExtractToDirectory(sophiaScriptZipFilePath, $"{Paths.BasePath}", true);
                 File.Delete(sophiaScriptZipFilePath);
