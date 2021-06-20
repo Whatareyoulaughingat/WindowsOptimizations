@@ -36,7 +36,7 @@ namespace WindowsOptimizations
             }
 
             // Show a message prompting the user that a reboot is required (if any of these condition below is true).
-            if (PatchExecutionCheck.HasDisabledUnnecessaryWindowsServices || PatchExecutionCheck.HasReducedMouseInputLatency || PatchExecutionCheck.HasOptimizedSystemProfile || PatchExecutionCheck.HasDebloatedWindows || PatchExecutionCheck.HasOptimizedNetworkOptions)
+            if (PatchExecutionCheck.HasDisabledUnnecessaryWindowsServices || PatchExecutionCheck.HasReducedMouseInputLatency || PatchExecutionCheck.HasOptimizedSystemProfile || PatchExecutionCheck.HasDebloatedWindows || PatchExecutionCheck.HasOptimizedNetworkOptions || PatchExecutionCheck.HasReducedCPUProcesses)
             {
                 MessageBoxResult result = MessageBox.Show("Some changes require a reboot to take effect. Would you like reboot now?", "WindowsOptimizations", MessageBoxButton.YesNo, MessageBoxImage.Information);
 

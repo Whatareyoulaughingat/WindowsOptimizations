@@ -159,7 +159,12 @@ namespace WindowsOptimizations.UI.ViewModels
 
         public DelegateCommand ReduceCPUProcessesCommand { get; internal set; }
         public async Task ReduceCPUProcesses()
-            => await Dispatcher.CurrentDispatcher.BeginInvoke(() => new CPUProcessPatch().LimitSvcHostSplitting());
+        {
+            await Dispatcher.CurrentDispatcher.BeginInvoke(() => new CPUProcessPatch().LimitSvcHostSplitting());
+
+            PatchExecutionCheck.HasReducedCPUProcesses = true;
+            MessageBox.Show("Operation completed sucessfully.", nameof(CPUProcessPatch), MessageBoxButton.OK, MessageBoxImage.Information);
+        }
 
         public DelegateCommand AboutCommand { get; internal set; }
         public static async Task About()
