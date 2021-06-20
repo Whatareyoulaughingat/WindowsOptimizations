@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using WindowsOptimizations.Core.GlobalData;
 
 namespace WindowsOptimizations.Core.Patches
 {
@@ -13,7 +14,7 @@ namespace WindowsOptimizations.Core.Patches
         /// <returns>[<see cref="SystemProfilePatch"/>] The same class for allowing method chaining.</returns>
         public SystemProfilePatch IncreaseSystemResponsiveness()
         {
-            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile", "SystemResponsiveness", 1);
+            Registry.SetValue(RegistryKeys.SystemProfileKey, "SystemResponsiveness", 1);
             return this;
         }
 
@@ -23,7 +24,7 @@ namespace WindowsOptimizations.Core.Patches
         /// <returns>[<see cref="SystemProfilePatch"/>] The same class for allowing method chaining.</returns>
         public SystemProfilePatch IncreaseGamePriority()
         {
-            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games", "Priority", 6);
+            Registry.SetValue(RegistryKeys.GameTaskSystemProfileKey, "Priority", 6);
             return this;
         }
 
@@ -33,7 +34,7 @@ namespace WindowsOptimizations.Core.Patches
         /// <returns>[<see cref="SystemProfilePatch"/>] The same class for allowing method chaining.</returns>
         public SystemProfilePatch SetSchedulingCategoryToHigh()
         {
-            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games", "Scheduling Category", "High");
+            Registry.SetValue(RegistryKeys.GameTaskSystemProfileKey, "Scheduling Category", "High");
             return this;
         }
 
@@ -43,7 +44,7 @@ namespace WindowsOptimizations.Core.Patches
         /// <returns>[<see cref="SystemProfilePatch"/>] The same class for allowing method chaining.</returns>
         public SystemProfilePatch SetSFIOPriorityToHigh()
         {
-            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games", "SFIO Priority", "High");
+            Registry.SetValue(RegistryKeys.GameTaskSystemProfileKey, "SFIO Priority", "High");
             return this;
         }
     }
