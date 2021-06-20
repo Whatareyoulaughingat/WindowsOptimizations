@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
+using WindowsOptimizations.Core.GlobalData;
 
 namespace WindowsOptimizations.Core.Patches
 {
+    /// <summary>
+    /// Various kernel and powershell patches that may improve or provide a more stable internet speed.
+    /// </summary>
     public class NetworkPatch
     {
         /// <summary>
@@ -44,8 +48,8 @@ namespace WindowsOptimizations.Core.Patches
         /// <returns>[<see cref="NetworkPatch"/>] The same class for allowing method chaining.</returns>
         public NetworkPatch ChangeCongestionProvider()
         {
-            Registry.SetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Nsi\\{eb004a03-9b1a-11d4-9123-0050047759bc}\\26", "00000000", new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x05, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 });
-            Registry.SetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Nsi\\{eb004a03-9b1a-11d4-9123-0050047759bc}\\26", "04000000", new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x05, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 });
+            Registry.SetValue(RegistryKeys.TCPCongestionProviderKey, "00000000", new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x05, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 });
+            Registry.SetValue(RegistryKeys.TCPCongestionProviderKey, "04000000", new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x05, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 });
 
             return this;
         }
@@ -87,7 +91,7 @@ namespace WindowsOptimizations.Core.Patches
         /// <returns>[<see cref="NetworkPatch"/>] The same class for allowing method chaining.</returns>
         public NetworkPatch SetDefaultTTL()
         {
-            Registry.SetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters", "DefaultTTL", 64);
+            Registry.SetValue(RegistryKeys.TcpipParametersKey, "DefaultTTL", 64);
             return this;
         }
 
@@ -173,10 +177,10 @@ namespace WindowsOptimizations.Core.Patches
         /// <returns>[<see cref="NetworkPatch"/>] The same class for allowing method chaining.</returns>
         public NetworkPatch IncreaseHostResolutionPriority()
         {
-            Registry.SetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\ServiceProvider", "LocalPriority", 4);
-            Registry.SetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\ServiceProvider", "HostPriority", 5);
-            Registry.SetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\ServiceProvider", "DnsPriority", 6);
-            Registry.SetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\ServiceProvider", "NetbtPriority", 7);
+            Registry.SetValue(RegistryKeys.ServiceProviderKey, "LocalPriority", 4);
+            Registry.SetValue(RegistryKeys.ServiceProviderKey, "HostPriority", 5);
+            Registry.SetValue(RegistryKeys.ServiceProviderKey, "DnsPriority", 6);
+            Registry.SetValue(RegistryKeys.ServiceProviderKey, "NetbtPriority", 7);
 
             return this;
         }
@@ -217,7 +221,7 @@ namespace WindowsOptimizations.Core.Patches
         /// <returns>[<see cref="NetworkPatch"/>] The same class for allowing method chaining.</returns>
         public NetworkPatch DisableNetworkThrottlingIndex()
         {
-            Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile", "NetworkThrottlingIndex", 0xffffffff);
+            Registry.SetValue(RegistryKeys.SystemProfileKey, "NetworkThrottlingIndex", 0xffffffff);
             return this;
         }
 
@@ -255,9 +259,9 @@ namespace WindowsOptimizations.Core.Patches
                         {
                             result = nic;
 
-                            Registry.SetValue($"HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces\\{result.Id}", "TcpAckFrequency", 1);
-                            Registry.SetValue($"HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces\\{result.Id}", "TcpNoDelay", 1);
-                            Registry.SetValue($"HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces\\{result.Id}", "TcpDelAckTicks", 0);
+                            Registry.SetValue($"{RegistryKeys.TcpipInterfacesKey}\\{result.Id}", "TcpAckFrequency", 1);
+                            Registry.SetValue($"{RegistryKeys.TcpipInterfacesKey}\\{result.Id}", "TcpNoDelay", 1);
+                            Registry.SetValue($"{RegistryKeys.TcpipInterfacesKey}\\{result.Id}", "TcpDelAckTicks", 0);
                         }
                     }
                 }
@@ -272,8 +276,8 @@ namespace WindowsOptimizations.Core.Patches
         /// <returns>[<see cref="NetworkPatch"/>] The same class for allowing method chaining.</returns>
         public NetworkPatch ChangeNetworkMemoryAllocations()
         {
-            Registry.SetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Memory Management", "LargeSystemCache", 0);
-            Registry.SetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Memory Management", "Size", 1);
+            Registry.SetValue(RegistryKeys.MemoryManagementKey, "LargeSystemCache", 0);
+            Registry.SetValue(RegistryKeys.MemoryManagementKey, "Size", 1);
 
             return this;
         }
@@ -285,8 +289,8 @@ namespace WindowsOptimizations.Core.Patches
         /// <returns>[<see cref="NetworkPatch"/>] The same class for allowing method chaining.</returns>
         public NetworkPatch ConfigureDynamicPortAllocation()
         {
-            Registry.SetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters", "MaxUserPort", 65534);
-            Registry.SetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters", "TcpTimedWaitDelay", 30);
+            Registry.SetValue(RegistryKeys.TcpipParametersKey, "MaxUserPort", 65534);
+            Registry.SetValue(RegistryKeys.TcpipParametersKey, "TcpTimedWaitDelay", 30);
 
             return this;
         }
@@ -297,7 +301,7 @@ namespace WindowsOptimizations.Core.Patches
         /// <returns>[<see cref="NetworkPatch"/>] The same class for allowing method chaining.</returns>
         public NetworkPatch DisableReservableBandwidthLimit()
         {
-            Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\Psched", "NonBestEffortLimit", 0);
+            Registry.SetValue(RegistryKeys.PschedKey, "NonBestEffortLimit", 0);
             return this;
         }
     }
