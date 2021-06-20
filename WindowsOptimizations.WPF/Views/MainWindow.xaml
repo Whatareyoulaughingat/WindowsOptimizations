@@ -78,6 +78,14 @@
                 Content="Optimize Network Options"
                 Command="{Binding OptimizeNetworkOptionsCommand}" />
 
+        <Button Width="300"
+                Height="30"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Margin="10, 250, 0, 0"
+                Content="Reduce CPU Processes"
+                Command="{Binding ReduceCPUProcessesCommand}" />
+
         <!--Information about the system's timer.-->
         <materialDesign:Card Margin="0,0,10,10"
                              Width="270"

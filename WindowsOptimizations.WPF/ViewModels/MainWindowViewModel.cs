@@ -44,6 +44,7 @@ namespace WindowsOptimizations.UI.ViewModels
             SetSystemTimerToMaximumResolutionCommand = new DelegateCommand(async () => await SetSystemTimerToMaximumResolution());
             DebloatWindowsCommand = new DelegateCommand(async () => await DebloatWindows());
             OptimizeNetworkOptionsCommand = new DelegateCommand(async () => await OptimizeNetworkOptions());
+            ReduceCPUProcessesCommand = new DelegateCommand(async () => await ReduceCPUProcesses());
             AboutCommand = new DelegateCommand(async () => await About());
 
             // Getting timer resolution info and assigning it to the appropriate variables.
@@ -72,7 +73,7 @@ namespace WindowsOptimizations.UI.ViewModels
                 .SetOneToOnePointerPrecision();
 
                 PatchExecutionCheck.HasReducedMouseInputLatency = true;
-                MessageBox.Show("Operation completed sucessfully.", nameof(RawMouseInputPatch), MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Operation completed sucessfully.", nameof(SystemProfilePatch), MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }
 
@@ -98,7 +99,7 @@ namespace WindowsOptimizations.UI.ViewModels
             await Dispatcher.CurrentDispatcher.BeginInvoke(() =>
             {
                 timerResolutionPatch
-                .GetTimerResolutionInfo() // Geting timer resolution info just in case something changed even though we did it in the constructor of this class.
+                .GetTimerResolutionInfo() // Geting timer resolution info just in case something changed even though we did the same thing in the constructor of this class.
                 .SetMaximumTimerResolutionValue();
 
                 TimerResolutionMinimumValue = TimeSpan.FromMilliseconds(timerResolutionPatch.MinimumResolution).TotalSeconds.ToString();
@@ -112,15 +113,16 @@ namespace WindowsOptimizations.UI.ViewModels
         public DelegateCommand DebloatWindowsCommand { get; internal set; }
         public static async Task DebloatWindows()
         {
-            await Dispatcher.CurrentDispatcher.BeginInvoke(() =>
+            await Dispatcher.CurrentDispatcher.BeginInvoke(async () =>
             {
-                new Debloater()
+                Debloater debloater = new();
+
+                await debloater
                 .SetUnrestrictedExecutionPolicy()
-                .DebloatWindowsFirstPhase()
-                .DebloatWindowsSecondPhase();
+                .ContinueWith(async x => await debloater.DebloatWindowsFirstPhaseAsync())
+                .ContinueWith(async x => await debloater.DebloatWindowsSecondPhase());
 
                 PatchExecutionCheck.HasDebloatedWindows = true;
-                MessageBox.Show("Operation completed sucessfully.", nameof(Debloater), MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }
 
@@ -154,6 +156,10 @@ namespace WindowsOptimizations.UI.ViewModels
                 MessageBox.Show("Operation completed sucessfully.", nameof(NetworkPatch), MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }
+
+        public DelegateCommand ReduceCPUProcessesCommand { get; internal set; }
+        public async Task ReduceCPUProcesses()
+            => await Dispatcher.CurrentDispatcher.BeginInvoke(() => new CPUProcessPatch().LimitSvcHostSplitting());
 
         public DelegateCommand AboutCommand { get; internal set; }
         public static async Task About()
