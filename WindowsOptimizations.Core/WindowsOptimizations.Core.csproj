@@ -15,13 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AsyncFixer" Version="1.5.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Microsoft.Win32.Registry" Version="6.0.0-preview.5.21301.5" />
     <PackageReference Include="System.Management" Version="6.0.0-preview.5.21301.5" />
-    <PackageReference Include="System.Text.Json" Version="6.0.0-preview.5.21301.5" />
   </ItemGroup>
 
   <ItemGroup>

@@ -17,5 +17,5 @@
   <ItemGroup>
     <ProjectReference Include="..\WindowsOptimizations.Core\WindowsOptimizations.Core.csproj" />
   </ItemGroup>
-
+  
 </Project>
