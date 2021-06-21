@@ -2,7 +2,6 @@
 using System.IO;
 using System.Windows;
 using WindowsOptimizations.Core.GlobalData;
-using WindowsOptimizations.Core.Handlers;
 
 namespace WindowsOptimizations
 {
@@ -11,15 +10,9 @@ namespace WindowsOptimizations
     /// </summary>
     public partial class App : Application
     {
-        protected override async void OnStartup(StartupEventArgs e)
+        protected override void OnStartup(StartupEventArgs e)
         {
             Directory.CreateDirectory(Paths.BasePath);
-
-            // Serialize/Deserialize the UnnecessaryServices class model.
-            ConfigurationHandler configurationHandler = new();
-            await configurationHandler.SerializeAsync(Paths.UnnecessaryWindowsServicesJsonFile);
-            await configurationHandler.DeserializeAsync(Paths.UnnecessaryWindowsServicesJsonFile);
-
             base.OnStartup(e);
         }
 
