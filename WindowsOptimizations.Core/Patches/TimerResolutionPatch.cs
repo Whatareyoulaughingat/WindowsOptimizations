@@ -28,7 +28,7 @@ namespace WindowsOptimizations.Core.Patches
         /// <returns>[<see cref="TimerResolutionPatch"/>] The same class for allowing method chaining.</returns>
         public TimerResolutionPatch SetMaximumTimerResolutionValue()
         {
-            NativeMethods.NtSetTimerResolution(MaximumResolution, true, ref CurrentResolution);
+            NativeMethods.NtSetTimerResolution(MinimumResolution, true, ref CurrentResolution);
             return this;
         }
 
