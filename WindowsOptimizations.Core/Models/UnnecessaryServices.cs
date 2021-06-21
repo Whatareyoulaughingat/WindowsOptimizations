@@ -1,22 +1,15 @@
-﻿using System;
-
-namespace WindowsOptimizations.Core.Models
+﻿namespace WindowsOptimizations.Core.Models
 {
     /// <summary>
     /// A class model containg variables that store the names of unnecessary windows services.
     /// </summary>
-    [Serializable]
     public class UnnecessaryServices
     {
         /// <summary>
         /// A string array containg all unnecessary Windows services.
         /// </summary>
-        public string[] WindowsServices { get; set; }
-
-        public UnnecessaryServices()
+        public static string[] WindowsServices { get; protected internal set; } = new string[]
         {
-            WindowsServices = new string[]
-            {
                 "AJRouter", // AllJoyn Router Service
                 "ALG", // Application Layer Gateway Service
                 "bthserv", // Bluetooth Support Device
@@ -64,7 +57,6 @@ namespace WindowsOptimizations.Core.Models
                 "XblAuthManager", // Xbox Live Auth Manager
                 "XblGameSave", // Xbox Live Game Save
                 "XboxNetApiSvc", // Xbox Live Networking Service
-            };
-        }
+        };
     }
 }
