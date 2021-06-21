@@ -1,6 +1,5 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
-using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -14,18 +13,18 @@ namespace WindowsOptimizations.UI.ViewModels
     {
         private readonly TimerResolutionPatch timerResolutionPatch = new();
 
-        private string timerResolutionMinimumValue;
-        public string TimerResolutionMinimumValue
-        {
-            get { return timerResolutionMinimumValue; }
-            set { SetProperty(ref timerResolutionMinimumValue, $"Minimum timer resolution value: {value}ms"); }
-        }
-
         private string timerResolutionMaximumValue;
         public string TimerResolutionMaximumValue
         {
             get { return timerResolutionMaximumValue; }
             set { SetProperty(ref timerResolutionMaximumValue, $"Maximum timer resolution value: {value}ms"); }
+        }
+
+        private string timerResolutionMinimumValue;
+        public string TimerResolutionMinimumValue
+        {
+            get { return timerResolutionMinimumValue; }
+            set { SetProperty(ref timerResolutionMinimumValue, $"Minimum timer resolution value: {value}ms"); }
         }
 
         private string timerResolutionCurrentValue;
@@ -49,8 +48,8 @@ namespace WindowsOptimizations.UI.ViewModels
 
             // Getting timer resolution info and assigning it to the appropriate variables.
             timerResolutionPatch.GetTimerResolutionInfo();
-            TimerResolutionMinimumValue = TimeSpan.FromMilliseconds(timerResolutionPatch.MinimumResolution).TotalSeconds.ToString();
-            TimerResolutionMaximumValue = TimeSpan.FromMilliseconds(timerResolutionPatch.MaximumResolution).TotalSeconds.ToString();
+            TimerResolutionMinimumValue = (timerResolutionPatch.MinimumResolution * 0.0001).ToString();
+            TimerResolutionMaximumValue = (timerResolutionPatch.MaximumResolution * 0.0001).ToString();
         }
 
         public DelegateCommand DisableUnnecessaryWindowsServicesCommand { get; internal set; }
@@ -99,12 +98,12 @@ namespace WindowsOptimizations.UI.ViewModels
             await Dispatcher.CurrentDispatcher.BeginInvoke(() =>
             {
                 timerResolutionPatch
-                .GetTimerResolutionInfo() // Geting timer resolution info just in case something changed even though we did the same thing in the constructor of this class.
+                .GetTimerResolutionInfo() // Getting the timer resolution info again (even though we did in the constructor), just in case something has changed.
                 .SetMaximumTimerResolutionValue();
 
-                TimerResolutionMinimumValue = TimeSpan.FromMilliseconds(timerResolutionPatch.MinimumResolution).TotalSeconds.ToString();
-                TimerResolutionMaximumValue = TimeSpan.FromMilliseconds(timerResolutionPatch.MaximumResolution).TotalSeconds.ToString();
-                TimerResolutionCurrentValue = TimeSpan.FromMilliseconds(timerResolutionPatch.CurrentResolution).TotalSeconds.ToString();
+                TimerResolutionMinimumValue = (timerResolutionPatch.MinimumResolution * 0.0001).ToString();
+                TimerResolutionMaximumValue = (timerResolutionPatch.MaximumResolution * 0.0001).ToString();
+                TimerResolutionCurrentValue = (timerResolutionPatch.CurrentResolution * 0.0001).ToString();
 
                 MessageBox.Show("This only works when this application is active. By the time you exit, the timer will return to its default resolution value.", nameof(SystemProfilePatch), MessageBoxButton.OK, MessageBoxImage.Warning);
             });

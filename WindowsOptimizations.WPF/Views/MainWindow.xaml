@@ -87,44 +87,6 @@
                 Content="Reduce CPU Processes"
                 Command="{Binding ReduceCPUProcessesCommand}" />
 
-        <!--Information about the system's timer.-->
-        <materialDesign:Card Margin="0,0,10,10"
-                             Width="270"
-                             Height="105"
-                             VerticalAlignment="Bottom"
-                             HorizontalAlignment="Right"
-                             Background="{DynamicResource MaterialDesignDarkSeparatorBackground}" Grid.ColumnSpan="2">
-
-            <StackPanel>
-                <Label Content="{Binding TimerResolutionMinimumValue}"
-               Width="260"
-               Height="25"
-               Margin="5"
-               VerticalAlignment="Top"
-               HorizontalAlignment="Left"
-               Foreground="{DynamicResource MaterialDesignDarkForeground}"
-               Background="{DynamicResource MaterialDesignDarkSeparatorBackground}" />
-
-                <Label Content="{Binding TimerResolutionMaximumValue}"
-               Width="260"
-               Height="25"
-               Margin="5"
-               VerticalAlignment="Center"
-               HorizontalAlignment="Left"
-               Foreground="{DynamicResource MaterialDesignDarkForeground}"
-               Background="{DynamicResource MaterialDesignDarkSeparatorBackground}" />
-
-                <Label Content="{Binding TimerResolutionCurrentValue}"
-               Width="260"
-               Height="25"
-               Margin="5"
-               VerticalAlignment="Bottom"
-               HorizontalAlignment="Left"
-               Foreground="{DynamicResource MaterialDesignDarkForeground}"
-               Background="{DynamicResource MaterialDesignDarkSeparatorBackground}" />
-            </StackPanel>
-        </materialDesign:Card>
-
         <!--An 'About' button containg licensing information and acknowledgements.-->
         <Button Width="55"
                 Height="35"
@@ -147,5 +109,43 @@
                 </Viewbox>
             </Button.Content>
         </Button>
+
+        <!--Information about the system's timer.-->
+        <materialDesign:Card Margin="0,0,10,10"
+                             Width="270"
+                             Height="105"
+                             VerticalAlignment="Bottom"
+                             HorizontalAlignment="Right"
+                             Background="{DynamicResource MaterialDesignDarkSeparatorBackground}" Grid.ColumnSpan="2">
+
+            <StackPanel>
+                <Label Content="{Binding TimerResolutionMaximumValue}"
+               Width="260"
+               Height="25"
+               Margin="5"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Foreground="{DynamicResource MaterialDesignDarkForeground}"
+               Background="{DynamicResource MaterialDesignDarkSeparatorBackground}" />
+                
+                <Label Content="{Binding TimerResolutionMinimumValue}"
+               Width="260"
+               Height="25"
+               Margin="5"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Left"
+               Foreground="{DynamicResource MaterialDesignDarkForeground}"
+               Background="{DynamicResource MaterialDesignDarkSeparatorBackground}" />
+
+                <Label Content="{Binding TimerResolutionCurrentValue}"
+               Width="260"
+               Height="25"
+               Margin="5"
+               VerticalAlignment="Bottom"
+               HorizontalAlignment="Left"
+               Foreground="{DynamicResource MaterialDesignDarkForeground}"
+               Background="{DynamicResource MaterialDesignDarkSeparatorBackground}" />
+            </StackPanel>
+        </materialDesign:Card>
     </Grid>
 </Window>
