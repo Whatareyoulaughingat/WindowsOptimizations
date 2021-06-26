@@ -4,24 +4,35 @@ using WindowsOptimizations.Core.Models;
 namespace WindowsOptimizations.Core.Patches
 {
     /// <summary>
-    /// An overall windows patch which disables some windows services.
+    /// Handles the way Windows services will run.
     /// </summary>
     public class WindowsServicePatch
     {
         /// <summary>
-        /// Disables almost every unnecessary windows service. Will free up system resources considerably and reduce CPU and RAM usage.
+        /// Disables a specific Windows service.
         /// </summary>
-        public void DisableAllUnnecessaryServices()
+        public void DisableService(WindowsService windowsServiceModel)
         {
-            using Process powershell = new Process();
+            using Process powershell = new();
             powershell.StartInfo.FileName = "powershell.exe";
             powershell.StartInfo.CreateNoWindow = true;
 
-            foreach (string service in UnnecessaryServices.WindowsServices)
-            {
-                powershell.StartInfo.Arguments = $"Set-Service -Name" + $" \"{service}\" " + "-StartupType Disabled -Status Stopped";
-                powershell.Start();
-            }
+            powershell.StartInfo.Arguments = $"Set-Service -Name" + $" \"{windowsServiceModel.Name}\" " + "-StartupType Disabled -Status Stopped";
+            powershell.Start();
+        }
+
+        /// <summary>
+        /// Enables a specific Windows service.
+        /// </summary>
+        /// <param name="windowsServiceModel"></param>
+        public void EnableService(WindowsService windowsServiceModel)
+        {
+            using Process powershell = new();
+            powershell.StartInfo.FileName = "powershell.exe";
+            powershell.StartInfo.CreateNoWindow = true;
+
+            powershell.StartInfo.Arguments = $"Set-Service -Name" + $" \"{windowsServiceModel.Name}\" " + "-StartupType Manual -Status Running";
+            powershell.Start();
         }
     }
 }
