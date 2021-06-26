@@ -1,15 +1,16 @@
-﻿namespace WindowsOptimizations.Core.Models
+﻿using System;
+
+namespace WindowsOptimizations.Core.Handlers.Configuration.Data
 {
-    /// <summary>
-    /// A class model containg variables that store the names of unnecessary windows services.
-    /// </summary>
-    public class UnnecessaryServices
+    [Serializable]
+    public class WindowsServicesData
     {
-        /// <summary>
-        /// A string array containg all unnecessary Windows services.
-        /// </summary>
-        public static string[] WindowsServices { get; protected internal set; } = new string[]
+        public string[] ServiceCollection { get; set; }
+
+        public WindowsServicesData()
         {
+            ServiceCollection = new string[]
+            {
                 "AJRouter", // AllJoyn Router Service
                 "ALG", // Application Layer Gateway Service
                 "bthserv", // Bluetooth Support Device
@@ -57,6 +58,7 @@
                 "XblAuthManager", // Xbox Live Auth Manager
                 "XblGameSave", // Xbox Live Game Save
                 "XboxNetApiSvc", // Xbox Live Networking Service
-        };
+            };
+        }
     }
 }
