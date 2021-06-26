@@ -8,10 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MaterialDesignThemes" Version="4.2.0-ci2581" />
-    <PackageReference Include="Prism.Core" Version="8.1.97" />
-    <PackageReference Include="Prism.Unity" Version="8.1.97" />
-    <PackageReference Include="Prism.Wpf" Version="8.1.97" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.2.0-ci2595" />
+    <PackageReference Include="ReactiveUI.Events.WPF" Version="14.1.1" />
+    <PackageReference Include="ReactiveUI.WPF" Version="14.1.1" />
   </ItemGroup>
 
   <ItemGroup>
