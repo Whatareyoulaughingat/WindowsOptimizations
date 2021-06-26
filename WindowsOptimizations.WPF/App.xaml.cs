@@ -1,7 +1,11 @@
-﻿using System.Diagnostics;
+﻿using ReactiveUI;
+using Splat;
+using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 using WindowsOptimizations.Core.GlobalData;
+using WindowsOptimizations.Core.Handlers.Configuration;
 
 namespace WindowsOptimizations
 {
@@ -10,22 +14,24 @@ namespace WindowsOptimizations
     /// </summary>
     public partial class App : Application
     {
-        protected override void OnStartup(StartupEventArgs e)
+        protected override async void OnStartup(StartupEventArgs e)
         {
             Directory.CreateDirectory(Paths.BasePath);
+
+            await ConfigurationHandler.SerializeOnCreationAndDeserialize(Paths.UnnecessaryWindowsServicesJsonFile);
+
+            Locator.CurrentMutable.RegisterViewsForViewModels(Assembly.GetCallingAssembly());
+
             base.OnStartup(e);
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
             // Delete the downloaded debloaters.
-            try
+            if (Directory.Exists($"{Paths.BasePath}\\Windows10Debloater-master") && Directory.Exists($"{Paths.BasePath}\\Windows-10-Sophia-Script-master"))
             {
                 Directory.Delete($"{Paths.BasePath}\\Windows10Debloater-master");
                 Directory.Delete($"{Paths.BasePath}\\Windows-10-Sophia-Script-master");
-            }
-            catch
-            {
             }
 
             // Show a message prompting the user that a reboot is required (if any of these condition below is true).
