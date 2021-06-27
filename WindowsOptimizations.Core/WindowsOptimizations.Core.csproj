@@ -5,26 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="External\PresentationFramework.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="External\PresentationFramework.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.Win32.Registry" Version="6.0.0-preview.5.21301.5" />
     <PackageReference Include="ReactiveUI" Version="14.1.1" />
     <PackageReference Include="ReactiveUI.Fody" Version="14.1.1" />
     <PackageReference Include="System.Management" Version="6.0.0-preview.5.21301.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="PresentationFramework">
-      <HintPath>External\PresentationFramework.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
