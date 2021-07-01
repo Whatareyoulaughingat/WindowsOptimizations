@@ -1,4 +1,5 @@
 ﻿using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using System.Reactive;
 using System.Threading.Tasks;
 using System.Windows;
@@ -51,13 +52,12 @@ namespace WindowsOptimizations.WPF.ViewModels
             timerResolutionPatch.GetTimerResolutionInfo();
             TimerResolutionMinimumValue = (timerResolutionPatch.MinimumResolution * 0.0001).ToString();
             TimerResolutionMaximumValue = (timerResolutionPatch.MaximumResolution * 0.0001).ToString();
+            // TimerResolutionCurrentValue = (timerResolutionPatch.CurrentResolution * 0.0001).ToString();
         }
 
         public ReactiveCommand<Unit, Unit> DisableUnnecessaryWindowsServicesCommand { get; private set; }
         public static async Task DisableUnnecessaryWindowsServices()
-        {
-            await Dispatcher.CurrentDispatcher.BeginInvoke(() => new WindowsServicesApplier().ShowDialog());
-        }
+            => await Dispatcher.CurrentDispatcher.BeginInvoke(() => new WindowsServicesApplier().ShowDialog());
 
         public ReactiveCommand<Unit, Unit> ReduceMouseInputLatencyCommand { get; private set; }
         public static async Task ReduceMouseInputLatency()
@@ -165,6 +165,6 @@ namespace WindowsOptimizations.WPF.ViewModels
 
         public ReactiveCommand<Unit, Unit> AboutCommand { get; private set; }
         public static async Task About()
-            => await Dispatcher.CurrentDispatcher.BeginInvoke(() => MessageBox.Show("Licensing:\n" + "This application is licensed under the MIT license.\n" + "\nAcknowledgements:\n" + "Windows10Debloater --> https://github.com/Sycnex/Windows10Debloater \n" + "Sophia Script --> https://github.com/farag2/Windows-10-Sophia-Script", "About"));
+            => await Dispatcher.CurrentDispatcher.BeginInvoke(() => MessageBox.Show("Licensing:\n" + "This application is licensed under the MIT license.\n" + "\nAcknowledgements:\n" + "Windows10Debloater: https://github.com/Sycnex/Windows10Debloater \n" + "Sophia Script: https://github.com/farag2/Windows-10-Sophia-Script", "About"));
     }
 }
