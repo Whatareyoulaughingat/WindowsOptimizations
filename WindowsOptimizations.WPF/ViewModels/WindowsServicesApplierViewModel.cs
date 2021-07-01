@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Threading.Tasks;
@@ -14,19 +15,11 @@ namespace WindowsOptimizations.WPF.ViewModels
     {
         private readonly WindowsServicePatch windowsServicePatch = new();
 
-        private ObservableCollection<WindowsService> unnecessaryServices = new();
-        public ObservableCollection<WindowsService> UnnecessaryServices
-        {
-            get { return unnecessaryServices; }
-            set { this.RaiseAndSetIfChanged(ref unnecessaryServices, value); }
-        }
+        [Reactive]
+        public ObservableCollection<WindowsService> UnnecessaryServices { get; set; } = new();
 
-        private bool hasSelectedAll;
-        public bool HasSelectedAll
-        {
-            get { return hasSelectedAll; }
-            set { this.RaiseAndSetIfChanged(ref hasSelectedAll, value); }
-        }
+        [Reactive]
+        public bool HasSelectedAll { get; set; }
 
         public WindowsServicesApplierViewModel()
         {

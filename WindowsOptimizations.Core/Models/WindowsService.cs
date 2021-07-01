@@ -1,4 +1,5 @@
 ﻿using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace WindowsOptimizations.Core.Models
 {
@@ -7,18 +8,10 @@ namespace WindowsOptimizations.Core.Models
     /// </summary>
     public class WindowsService : ReactiveObject
     {
-        private string name;
-        public string Name
-        {
-            get { return name; } 
-            set { this.RaiseAndSetIfChanged(ref name, value); }
-        }
+        [Reactive]
+        public string Name { get; set; }
 
-        private bool isSelected;
-        public bool IsSelected
-        {
-            get { return isSelected; }
-            set { this.RaiseAndSetIfChanged(ref isSelected, value); }
-        }
+        [Reactive]
+        public bool IsSelected { get; set; }
     }
 }
