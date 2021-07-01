@@ -41,13 +41,7 @@ namespace WindowsOptimizations.Core.Tools
                     using HttpClient httpClient = new();
 
                     await using Stream httpStream = await httpClient.GetStreamAsync("https://github.com/Sycnex/Windows10Debloater/archive/refs/heads/master.zip");
-                    await using FileStream fileStream = new(
-                        path: windows10DebloaterZipFilePath,
-                        mode: FileMode.CreateNew,
-                        access: FileAccess.Write,
-                        share: FileShare.Write,
-                        bufferSize: 4096,
-                        useAsync: true);
+                    await using FileStream fileStream = File.OpenWrite(windows10DebloaterZipFilePath);
 
                     await httpStream.CopyToAsync(fileStream);
                 }));
@@ -77,13 +71,7 @@ namespace WindowsOptimizations.Core.Tools
                     using HttpClient httpClient = new();
 
                     await using Stream httpStream = await httpClient.GetStreamAsync("https://github.com/farag2/Windows-10-Sophia-Script/archive/refs/heads/master.zip");
-                    await using FileStream fileStream = new(
-                        path: sophiaScriptZipFilePath,
-                        mode: FileMode.CreateNew,
-                        access: FileAccess.Write,
-                        share: FileShare.Write,
-                        bufferSize: 4096,
-                        useAsync: true);
+                    await using FileStream fileStream = File.OpenWrite(sophiaScriptZipFilePath);
 
                     await httpStream.CopyToAsync(fileStream);
                 }));
