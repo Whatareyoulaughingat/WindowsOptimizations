@@ -21,7 +21,7 @@ namespace WindowsOptimizations.Core.Patches
         {
             // Get total amount of RAM installed.
             string query = "SELECT Capacity FROM Win32_PhysicalMemory";
-            ManagementObjectSearcher searcher = new(query);
+            using ManagementObjectSearcher searcher = new(query);
 
             string totalRamAmount = StringExtensions.ToSize(searcher
                 .Get()
