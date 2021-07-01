@@ -5,8 +5,14 @@ using WindowsOptimizations.Core.Handlers.Configuration.Data;
 
 namespace WindowsOptimizations.Core.Handlers.Configuration
 {
+    /// <summary>
+    /// Handles the way JSON serialization and deserialization works.
+    /// </summary>
     public class ConfigurationHandler
     {
+        /// <summary>
+        /// An instance of <see cref="WindowsServicesData"/>.
+        /// </summary>
         public static WindowsServicesData WindowsServicesDataInstance { get; set; }
 
         /// <summary>
@@ -18,18 +24,18 @@ namespace WindowsOptimizations.Core.Handlers.Configuration
         {
             if (!File.Exists(jsonFilePath))
             {
-                await SerializeAsync(jsonFilePath);
+                await using FileStream serializationStream = File.OpenWrite(jsonFilePath);
+                await JsonSerializer.SerializeAsync(serializationStream, new WindowsServicesData(), new JsonSerializerOptions() { WriteIndented = true });
             }
 
             await DeserializeAsync(jsonFilePath);
         }
 
-        public static async Task SerializeAsync(string jsonFilePath)
-        {
-            await using FileStream serializationStream = File.OpenWrite(jsonFilePath);
-            await JsonSerializer.SerializeAsync(serializationStream, new WindowsServicesData(), new JsonSerializerOptions() { WriteIndented = true });
-        }
-
+        /// <summary>
+        /// Deserializes the values from a JSON file.
+        /// </summary>
+        /// <param name="jsonFilePath"></param>
+        /// <returns></returns>
         public static async Task DeserializeAsync(string jsonFilePath)
         {
             await using FileStream deserializationStream = File.OpenRead(jsonFilePath);

@@ -2,6 +2,9 @@
 
 namespace WindowsOptimizations.Core.GlobalData
 {
+    /// <summary>
+    /// A struct containing various variables that store individual registry key paths used by this application.
+    /// </summary>
     public struct RegistryKeys
     {
         /// <summary>
