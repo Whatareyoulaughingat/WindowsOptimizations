@@ -1,4 +1,5 @@
-﻿<reactiveui:ReactiveWindow x:Class="WindowsOptimizations.WPF.Views.WindowsServicesApplier"
+﻿<reactiveui:ReactiveWindow
+        x:Class="WindowsOptimizations.WPF.Views.WindowsServicesApplier"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -17,7 +18,7 @@
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
-        Background="{DynamicResource MaterialDesignLightBackground}"
+        Background="{DynamicResource MaterialDesignDarkBackground}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         ResizeMode="CanMinimize">
 
@@ -41,7 +42,8 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Margin="5"
-                                               Text="{Binding Name}" />
+                                               Text="{Binding Name}"
+                                               Foreground="{DynamicResource MaterialDesignDarkForeground}" />
 
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
@@ -70,7 +72,8 @@
                   Margin="5, 50"
                   Content="Select All"
                   IsThreeState="False"
-                  x:Name="SelectAllWindowsServices" />
+                  x:Name="SelectAllWindowsServices"
+                  Foreground="{DynamicResource MaterialDesignDarkForeground}" />
 
         <Button Height="30"
                 Width="200"
