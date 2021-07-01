@@ -8,7 +8,7 @@ using WindowsOptimizations.Core.Patches;
 using WindowsOptimizations.Core.Tools;
 using WindowsOptimizations.WPF.Views;
 
-namespace WindowsOptimizations.UI.ViewModels
+namespace WindowsOptimizations.WPF.ViewModels
 {
     public class MainWindowViewModel : ReactiveObject
     {
