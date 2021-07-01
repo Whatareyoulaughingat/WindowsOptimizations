@@ -1,6 +1,6 @@
 ﻿using ReactiveUI;
 using System.Reactive.Disposables;
-using WindowsOptimizations.UI.ViewModels;
+using WindowsOptimizations.WPF.ViewModels;
 
 namespace WindowsOptimizations.Views
 {

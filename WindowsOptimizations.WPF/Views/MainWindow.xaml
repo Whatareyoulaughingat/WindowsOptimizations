@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:reactiveui="http://reactiveui.net"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:vm="clr-namespace:WindowsOptimizations.UI.ViewModels"
+        xmlns:vm="clr-namespace:WindowsOptimizations.WPF.ViewModels"
         xmlns:local="clr-namespace:WindowsOptimizations.Views"
         x:TypeArguments="vm:MainWindowViewModel"
         mc:Ignorable="d"
@@ -85,6 +85,14 @@
                 Margin="10, 130, 0, 0"
                 Content="Reduce CPU Processes"
                 x:Name="ReduceCPUProcesses" />
+
+        <Button Width="300"
+                Height="30"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Right"
+                Margin="0, 130, 10, 0"
+                Content="Enable Meessage Interrupts"
+                x:Name="EnableMessageInterrupts" />
 
         <!--An 'About' button containg licensing information and acknowledgements.-->
         <Button Width="55"
