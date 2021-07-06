@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 
 namespace WindowsOptimizations.Core.GlobalData
 {
@@ -11,11 +10,11 @@ namespace WindowsOptimizations.Core.GlobalData
         /// <summary>
         /// The base directory path of this application.
         /// </summary>
-        public static readonly string BasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\WindowsOptimizations");
+        public static readonly string BasePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\WindowsOptimizations";
 
         /// <summary>
         /// A file used for configuring which unnecessary windows service is going to be disabled.
         /// </summary>
-        public static readonly string UnnecessaryWindowsServicesJsonFile = Path.Combine(BasePath + "\\UnnecessaryWindowsServices.json");
+        public static readonly string UnnecessaryWindowsServicesJsonFile = BasePath + "\\UnnecessaryWindowsServices.json";
     }
 }

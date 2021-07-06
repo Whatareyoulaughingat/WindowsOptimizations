@@ -2,11 +2,15 @@
 
 namespace WindowsOptimizations.Core.Handlers.Configuration.Data
 {
+    /// <summary>
+    /// The default windows service collection data.
+    /// </summary>
     [Serializable]
     public class WindowsServicesData
     {
-        public string[] ServiceCollection { get; set; }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowsServicesData"/> class as well as the <see cref="ServiceCollection"/>.
+        /// </summary>
         public WindowsServicesData()
         {
             ServiceCollection = new string[]
@@ -60,5 +64,10 @@ namespace WindowsOptimizations.Core.Handlers.Configuration.Data
                 "XboxNetApiSvc", // Xbox Live Networking Service
             };
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the default collection will be used or not.
+        /// </summary>
+        public string[] ServiceCollection { get; set; }
     }
 }

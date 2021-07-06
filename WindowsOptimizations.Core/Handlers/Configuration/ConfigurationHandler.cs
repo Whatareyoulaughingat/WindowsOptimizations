@@ -11,15 +11,15 @@ namespace WindowsOptimizations.Core.Handlers.Configuration
     public class ConfigurationHandler
     {
         /// <summary>
-        /// An instance of <see cref="WindowsServicesData"/>.
+        /// Gets or sets a value indicating the instance of <see cref="WindowsServicesData"/>.
         /// </summary>
         public static WindowsServicesData WindowsServicesDataInstance { get; set; }
 
         /// <summary>
         /// If the specified file path doesn't exist, creates a new one, serializes it and then deserializes it right after.
         /// </summary>
-        /// <param name="jsonFilePath"></param>
-        /// <returns></returns>
+        /// <param name="jsonFilePath">The path of a JSON file.</param>
+        /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
         public static async Task SerializeOnCreationAndDeserialize(string jsonFilePath)
         {
             if (!File.Exists(jsonFilePath))
@@ -34,8 +34,8 @@ namespace WindowsOptimizations.Core.Handlers.Configuration
         /// <summary>
         /// Deserializes the values from a JSON file.
         /// </summary>
-        /// <param name="jsonFilePath"></param>
-        /// <returns></returns>
+        /// <param name="jsonFilePath">The path of a JSON file.</param>
+        /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
         public static async Task DeserializeAsync(string jsonFilePath)
         {
             await using FileStream deserializationStream = File.OpenRead(jsonFilePath);

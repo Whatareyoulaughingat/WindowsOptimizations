@@ -1,8 +1,9 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Linq;
 using System.Management;
+using System.Threading.Tasks;
 using System.Windows;
+using Microsoft.Win32;
 using WindowsOptimizations.Core.Extensions;
 using WindowsOptimizations.Core.GlobalData;
 
@@ -16,19 +17,20 @@ namespace WindowsOptimizations.Core.Patches
         /// <summary>
         /// Limits the splitting threshold of SvcHosts.
         /// </summary>
-        /// <returns>[<see cref="CPUProcessPatch"/>] The same class for allowing method chaining.</returns>
-        public CPUProcessPatch LimitSvcHostSplitting()
+        /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
+        public static Task LimitSvcHostSplitting()
         {
             // Get total amount of RAM installed.
             string query = "SELECT Capacity FROM Win32_PhysicalMemory";
-            using ManagementObjectSearcher searcher = new(query);
+            using ManagementObjectSearcher searcher = new (query);
 
-            string totalRamAmount = StringExtensions.ToSize(searcher
+            string totalRamAmount = StringExtensions.ToSize(
+                searcher
                 .Get()
                 .Cast<ManagementObject>()
                 .Sum(x => Convert.ToInt64(x.Properties["Capacity"].Value)), SizeUnits.GB);
 
-            // Set the svc host splitting threshold accoring to the total amount of ram.
+            // Set the Svc host splitting threshold accoring to the total amount of ram.
             switch (totalRamAmount)
             {
                 case "4.00":
@@ -68,7 +70,7 @@ namespace WindowsOptimizations.Core.Patches
                     break;
             }
 
-            return this;
+            return Task.CompletedTask;
         }
     }
 }

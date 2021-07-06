@@ -1,8 +1,6 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Threading.Tasks;
 using System.Windows;
+using Microsoft.Win32;
 using WindowsOptimizations.Core.GlobalData;
 
 namespace WindowsOptimizations.Core.Patches
@@ -15,21 +13,21 @@ namespace WindowsOptimizations.Core.Patches
         /// <summary>
         /// Disables pointer acceleration completely by changing specific registry values.
         /// </summary>
-        /// <returns>[<see cref="RawMouseInputPatch"/>] The same class for allowing method chaining.</returns>
-        public RawMouseInputPatch DisablePointerAcceleration()
+        /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
+        public static Task DisablePointerAcceleration()
         {
             Registry.SetValue(RegistryKeys.MouseKey, "MouseSpeed", "0");
             Registry.SetValue(RegistryKeys.MouseKey, "MouseThreshold1", "0");
             Registry.SetValue(RegistryKeys.MouseKey, "MouseThreshold2", "0");
 
-            return this;
+            return Task.CompletedTask;
         }
 
         /// <summary>
         /// Sets a 1:1 pointer precision based on the windows scaling.
         /// </summary>
-        /// <returns>[<see cref="RawMouseInputPatch"/>] The same class for allowing method chaining.</returns>
-        public RawMouseInputPatch SetOneToOnePointerPrecision()
+        /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
+        public static Task SetOneToOnePointerPrecision()
         {
             double lastLoadedDpi = double.Parse(Registry.GetValue(RegistryKeys.ThemeManagerKey, "LastLoadedDPI", 96).ToString());
             double scale = 96.00 / lastLoadedDpi;
@@ -44,7 +42,8 @@ namespace WindowsOptimizations.Core.Patches
                     break;
 
                 // 125.00%
-                case var value when value == (96.00 / (lastLoadedDpi + 24.00)).ToString("0.00%"):
+                // case var value when value == (96.00 / (lastLoadedDpi + 24.00)).ToString("0.00%"):
+                case var value when value == (scale + 24.00).ToString("0.00%"):
                     Registry.SetValue(RegistryKeys.MouseKey, "SmoothMouseXCurve", new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x10, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x20, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x30, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x40, 0x0, 0x0, 0x0, 0x0, 0x0 });
                     Registry.SetValue(RegistryKeys.MouseKey, "SmoothMouseYCurve", new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x38, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0xA8, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0xE0, 0x0, 0x0, 0x0, 0x0, 0x0 });
                     break;
@@ -92,22 +91,22 @@ namespace WindowsOptimizations.Core.Patches
                     break;
 
                 default:
-                    MessageBox.Show("Your Windows scaling setting is either higher than 300% or lower than 100%. Cannot set a 1:1 pointer precision because of that.", nameof(RawMouseInputPatch), MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Your Windows scaling setting is either higher than 350% or lower than 100%. Cannot set a 1:1 pointer precision because of that.", nameof(RawMouseInputPatch), MessageBoxButton.OK, MessageBoxImage.Error);
                     break;
             }
 
-            return this;
+            return Task.CompletedTask;
         }
 
         /// <summary>
         /// Changes the pointer sensitivity to its default setting.
         /// <para>The default value in the kernel is 10.</para>
         /// </summary>
-        /// <returns>[<see cref="RawMouseInputPatch"/>] The same class for allowing method chaining.</returns>
-        public RawMouseInputPatch SetPointerSensitivityToDefault()
+        /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
+        public static Task SetPointerSensitivityToDefault()
         {
             Registry.SetValue(RegistryKeys.MouseKey, "MouseSensitivity", "10");
-            return this;
+            return Task.CompletedTask;
         }
     }
 }

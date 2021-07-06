@@ -1,4 +1,5 @@
-﻿using WindowsOptimizations.Core.Native;
+﻿using System.Threading.Tasks;
+using WindowsOptimizations.Core.Native;
 
 namespace WindowsOptimizations.Core.Patches
 {
@@ -8,43 +9,43 @@ namespace WindowsOptimizations.Core.Patches
     public class TimerResolutionPatch
     {
         /// <summary>
-        /// Contains a value about the minimum possible system timer resolution
+        /// The minimum possible system timer resolution.
         /// </summary>
-        public int MinimumResolution;
+        public static int MinimumResolution;
 
         /// <summary>
-        /// Contains a value about the maximum possible system timer resolution.
+        /// The maximum possible system timer resolution.
         /// </summary>
-        public int MaximumResolution;
+        public static int MaximumResolution;
 
         /// <summary>
-        /// Contains a value about the current system timer resolution.
+        /// The current system timer resolution.
         /// </summary>
-        public int CurrentResolution;
+        public static int CurrentResolution;
 
         /// <summary>
         /// Sets the system's timer to the lowest value possible (0.5ms).
         /// </summary>
-        /// <returns>[<see cref="TimerResolutionPatch"/>] The same class for allowing method chaining.</returns>
-        public TimerResolutionPatch SetMaximumTimerResolutionValue()
+        /// <returns>[<see cref="TimerResolutionPatch"/>] An asynchronous operation.</returns>
+        public static Task SetMaximumTimerResolutionValue()
         {
             NativeMethods.NtSetTimerResolution(MaximumResolution, true, ref CurrentResolution);
-            return this;
+            return Task.CompletedTask;
         }
 
         /// <summary>
         /// Gets various information about the system's timer.
         /// </summary>
-        /// <returns>[<see cref="TimerResolutionPatch"/>] The same class for allowing method chaining.</returns>
-        public TimerResolutionPatch GetTimerResolutionInfo()
+        /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
+        public static Task GetTimerResolutionInfo()
         {
-            NativeMethods.NtQueryTimerResolution(out int minimumResolution, out int maximumResolution, out int currentResolution);
+            _ = NativeMethods.NtQueryTimerResolution(out int maximumResolution, out int minimumResolution, out int currentResolution);
 
             MaximumResolution = maximumResolution;
             MinimumResolution = minimumResolution;
             CurrentResolution = currentResolution;
 
-            return this;
+            return Task.CompletedTask;
         }
     }
 }

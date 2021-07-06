@@ -16,21 +16,21 @@ namespace WindowsOptimizations.Core.Tools
         /// Sets the execution policy to be unrestricted. Debloating won't happen if this isn't executed first.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public Task SetUnrestrictedExecutionPolicy()
+        public static async Task SetUnrestrictedExecutionPolicy()
         {
-            using Process powershell = new();
+            using Process powershell = new ();
             powershell.StartInfo.FileName = "powershell.exe";
             powershell.StartInfo.Arguments = "Set-ExecutionPolicy Unrestricted -Force";
             powershell.Start();
 
-            return Task.CompletedTask;
+            await powershell.WaitForExitAsync();
         }
 
         /// <summary>
         /// Debloats windows by downloading Windows10Debloater from github and running it through Powershell. Does not debloat everything so it's used as a 'first phase' of the debloating process.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public async Task DebloatWindowsFirstPhaseAsync()
+        public static async Task DebloatWindowsFirstPhaseAsync()
         {
             string windows10DebloaterZipFilePath = $"{Paths.BasePath}\\windows10-debloater.zip";
 
@@ -38,7 +38,7 @@ namespace WindowsOptimizations.Core.Tools
             {
                 await Task.WhenAll(Task.Run(async () =>
                 {
-                    using HttpClient httpClient = new();
+                    using HttpClient httpClient = new ();
 
                     await using Stream httpStream = await httpClient.GetStreamAsync("https://github.com/Sycnex/Windows10Debloater/archive/refs/heads/master.zip");
                     await using FileStream fileStream = File.OpenWrite(windows10DebloaterZipFilePath);
@@ -49,10 +49,12 @@ namespace WindowsOptimizations.Core.Tools
                 ZipFile.ExtractToDirectory(windows10DebloaterZipFilePath, $"{Paths.BasePath}", true);
                 File.Delete(windows10DebloaterZipFilePath);
 
-                using Process powershell = new();
+                using Process powershell = new ();
                 powershell.StartInfo.FileName = "powershell.exe";
                 powershell.StartInfo.Arguments = $"cd '{Paths.BasePath}\\Windows10Debloater-master'; " + @".\Windows10DebloaterGUI.ps1;";
                 powershell.Start();
+
+                await powershell.WaitForExitAsync();
             }
         }
 
@@ -60,7 +62,7 @@ namespace WindowsOptimizations.Core.Tools
         /// Debloats windows by downloading Sophia Script from github and running it through Powershell. It's used as a 'second and final phase' of the debloating process.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public async Task DebloatWindowsSecondPhase()
+        public static async Task DebloatWindowsSecondPhase()
         {
             string sophiaScriptZipFilePath = $"{Paths.BasePath}\\windows10-sophiascript.zip";
 
@@ -68,7 +70,7 @@ namespace WindowsOptimizations.Core.Tools
             {
                 await Task.WhenAll(Task.Run(async () =>
                 {
-                    using HttpClient httpClient = new();
+                    using HttpClient httpClient = new ();
 
                     await using Stream httpStream = await httpClient.GetStreamAsync("https://github.com/farag2/Windows-10-Sophia-Script/archive/refs/heads/master.zip");
                     await using FileStream fileStream = File.OpenWrite(sophiaScriptZipFilePath);
@@ -79,10 +81,12 @@ namespace WindowsOptimizations.Core.Tools
                 ZipFile.ExtractToDirectory(sophiaScriptZipFilePath, $"{Paths.BasePath}", true);
                 File.Delete(sophiaScriptZipFilePath);
 
-                using Process powershell = new();
+                using Process powershell = new ();
                 powershell.StartInfo.FileName = "powershell.exe";
                 powershell.StartInfo.Arguments = $"cd '{Paths.BasePath}\\Windows-10-Sophia-Script-master\\Sophia\\PowerShell 5.1'; " + @".\Sophia.ps1;";
                 powershell.Start();
+
+                await powershell.WaitForExitAsync();
             }
         }
     }
