@@ -1,14 +1,17 @@
-﻿using ReactiveUI;
-using System.Reactive.Disposables;
+﻿using System.Reactive.Disposables;
+using ReactiveUI;
 using WindowsOptimizations.WPF.ViewModels;
 
-namespace WindowsOptimizations.Views
+namespace WindowsOptimizations.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml.
     /// </summary>
     public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();

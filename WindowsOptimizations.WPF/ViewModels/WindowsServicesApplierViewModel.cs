@@ -1,26 +1,36 @@
-﻿using Microsoft.Win32;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using Microsoft.Win32;
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using WindowsOptimizations.Core.Handlers.Configuration;
 using WindowsOptimizations.Core.Models;
 using WindowsOptimizations.Core.Patches;
 
 namespace WindowsOptimizations.WPF.ViewModels
 {
+    /// <summary>
+    /// The viewmodel of <see cref="Views.WindowsServicesApplier"/>.
+    /// </summary>
     public class WindowsServicesApplierViewModel : ReactiveObject
     {
-        private readonly WindowsServicePatch windowsServicePatch = new();
-
+        /// <summary>
+        /// Gets or sets the observable collection of <see cref="WindowsService"/> model.
+        /// </summary>
         [Reactive]
         public ObservableCollection<WindowsService> UnnecessaryServices { get; set; } = new();
 
+        /// <summary>
+        /// Gets or sets a value indicating whether all unnecessary services are selected or not.
+        /// </summary>
         [Reactive]
         public bool HasSelectedAll { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowsServicesApplierViewModel"/> class.
+        /// </summary>
         public WindowsServicesApplierViewModel()
         {
             // Create commands.
@@ -36,7 +46,7 @@ namespace WindowsOptimizations.WPF.ViewModels
                 {
                     Name = ConfigurationHandler.WindowsServicesDataInstance.ServiceCollection[i],
                 });
-            } 
+            }
         }
 
         public ReactiveCommand<Unit, Unit> UseCustomCollectionCommand { get; private set; }
@@ -44,7 +54,7 @@ namespace WindowsOptimizations.WPF.ViewModels
         {
             await Dispatcher.CurrentDispatcher.BeginInvoke(async () =>
             {
-                OpenFileDialog fileDialog = new()
+                OpenFileDialog fileDialog = new ()
                 {
                     Title = "Select a custom JSON collection",
                     CheckFileExists = true,
@@ -105,7 +115,7 @@ namespace WindowsOptimizations.WPF.ViewModels
                 {
                     if (UnnecessaryServices[i].IsSelected)
                     {
-                        windowsServicePatch.DisableService(UnnecessaryServices[i]);
+                        WindowsServicePatch.DisableService(UnnecessaryServices[i]);
                     }
                 }
             });
@@ -120,7 +130,7 @@ namespace WindowsOptimizations.WPF.ViewModels
                 {
                     if (UnnecessaryServices[i].IsSelected)
                     {
-                        windowsServicePatch.EnableService(UnnecessaryServices[i]);
+                        WindowsServicePatch.EnableService(UnnecessaryServices[i]);
                     }
                 }
             });

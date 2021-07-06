@@ -1,11 +1,11 @@
-﻿using ReactiveUI;
-using System.Reactive.Disposables;
+﻿using System.Reactive.Disposables;
+using ReactiveUI;
 using WindowsOptimizations.WPF.ViewModels;
 
 namespace WindowsOptimizations.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for WindowsServicesApplier.xaml
+    /// Interaction logic for WindowsServicesApplier.xaml.
     /// </summary>
     public partial class WindowsServicesApplier : ReactiveWindow<WindowsServicesApplierViewModel>
     {
@@ -43,8 +43,8 @@ namespace WindowsOptimizations.WPF.Views
                     viewProperty => viewProperty.UseCustomJSONCollection)
                 .DisposeWith(disposableRegistration);
 
-            // Bind the 2 buttons where the services get enabled or disabled.
-            this.BindCommand(
+                // Bind the 2 buttons where the services get enabled or disabled.
+                this.BindCommand(
                     ViewModel,
                     vmProperty => vmProperty.DisableSelectedServicesCommand,
                     viewProperty => viewProperty.DisableSelectedServices)
