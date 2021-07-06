@@ -1,13 +1,13 @@
-﻿using ReactiveUI;
-using Splat;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Windows;
+using ReactiveUI;
+using Splat;
 using WindowsOptimizations.Core.GlobalData;
 using WindowsOptimizations.Core.Handlers.Configuration;
 
-namespace WindowsOptimizations
+namespace WindowsOptimizations.WPF
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -37,7 +37,7 @@ namespace WindowsOptimizations
             // Show a message prompting the user that a reboot is required (if any of these condition below is true).
             if (PatchExecutionCheck.HasDisabledUnnecessaryWindowsServices || PatchExecutionCheck.HasReducedMouseInputLatency || PatchExecutionCheck.HasOptimizedSystemProfile || PatchExecutionCheck.HasDebloatedWindows || PatchExecutionCheck.HasOptimizedNetworkOptions || PatchExecutionCheck.HasReducedCPUProcesses)
             {
-                MessageBoxResult result = MessageBox.Show("Some changes require a reboot to take effect. Would you like reboot now?", "WindowsOptimizations", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                MessageBoxResult result = MessageBox.Show("Some changes require a reboot to take effect. Would you like reboot now?", "Windows Optimizations", MessageBoxButton.YesNo, MessageBoxImage.Information);
 
                 if (result == MessageBoxResult.Yes)
                 {
