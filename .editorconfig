@@ -1,0 +1,16 @@
+﻿[*.cs]
+
+# SA1200: Using directives should be placed correctly
+dotnet_diagnostic.SA1200.severity = none
+dotnet_diagnostic.SA1633.severity=silent
+dotnet_diagnostic.SA1602.severity=silent
+dotnet_diagnostic.SA1101.severity=silent
+dotnet_diagnostic.SA0001.severity=silent
+dotnet_diagnostic.SA1114.severity=silent
+dotnet_diagnostic.SA1115.severity=silent
+dotnet_diagnostic.SA1201.severity=silent
+dotnet_diagnostic.SA1600.severity=silent
+dotnet_diagnostic.SA1516.severity=silent
+dotnet_diagnostic.SA1401.severity=silent
+dotnet_diagnostic.SA1204.severity=silent
+dotnet_diagnostic.SA1000.severity=silent
