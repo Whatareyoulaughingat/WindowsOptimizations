@@ -25,7 +25,7 @@ namespace WindowsOptimizations.Core.Handlers.Configuration
             if (!File.Exists(jsonFilePath))
             {
                 await using FileStream serializationStream = File.OpenWrite(jsonFilePath);
-                await JsonSerializer.SerializeAsync(serializationStream, new WindowsServicesData(), new JsonSerializerOptions() { WriteIndented = true });
+                await JsonSerializer.SerializeAsync(serializationStream, new WindowsServicesData(), new JsonSerializerOptions { WriteIndented = true });
             }
 
             await DeserializeAsync(jsonFilePath);

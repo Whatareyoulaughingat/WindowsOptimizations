@@ -16,7 +16,7 @@ namespace WindowsOptimizations.Core.Managers
             where TView : Window, new()
             where TViewModel : class, new()
         {
-            Window view = new TView()
+            Window view = new TView
             {
                 DataContext = new TViewModel(),
             };
