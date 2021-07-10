@@ -12,6 +12,7 @@ namespace WindowsOptimizations.Core.Tools
     /// </summary>
     public static class Debloater
     {
+        private static readonly Paths Paths = new();
         /// <summary>
         /// Sets the execution policy to be unrestricted. Debloating won't happen if this isn't executed first.
         /// </summary>

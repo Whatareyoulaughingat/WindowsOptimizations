@@ -9,6 +9,8 @@ namespace WindowsOptimizations.Core.Patches
     /// </summary>
     public static class SystemProfilePatch
     {
+        private static readonly RegistryKeys RegistryKeys = new();
+
         /// <summary>
         /// Increases overall system responsiveness.
         /// </summary>

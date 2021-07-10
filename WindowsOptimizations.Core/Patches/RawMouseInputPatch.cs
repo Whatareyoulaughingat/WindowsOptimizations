@@ -10,6 +10,8 @@ namespace WindowsOptimizations.Core.Patches
     /// </summary>
     public static class RawMouseInputPatch
     {
+        private static readonly RegistryKeys RegistryKeys = new();
+
         /// <summary>
         /// Disables pointer acceleration completely by changing specific registry values.
         /// </summary>

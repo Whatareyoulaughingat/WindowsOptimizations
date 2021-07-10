@@ -14,11 +14,13 @@ namespace WindowsOptimizations.WPF
     /// </summary>
     public partial class App : Application
     {
+        private readonly Paths paths = new();
+
         protected override async void OnStartup(StartupEventArgs e)
         {
-            Directory.CreateDirectory(Paths.BasePath);
+            Directory.CreateDirectory(paths.BasePath);
 
-            await ConfigurationHandler.SerializeOnCreationAndDeserialize(Paths.UnnecessaryWindowsServicesJsonFile);
+            await ConfigurationHandler.SerializeOnCreationAndDeserialize(paths.UnnecessaryWindowsServicesJsonFile);
 
             Locator.CurrentMutable.RegisterViewsForViewModels(Assembly.GetCallingAssembly());
 
@@ -28,10 +30,10 @@ namespace WindowsOptimizations.WPF
         protected override void OnExit(ExitEventArgs e)
         {
             // Delete the downloaded debloaters.
-            if (Directory.Exists($"{Paths.BasePath}\\Windows10Debloater-master") && Directory.Exists($"{Paths.BasePath}\\Windows-10-Sophia-Script-master"))
+            if (Directory.Exists($"{paths.BasePath}\\Windows10Debloater-master") && Directory.Exists($"{paths.BasePath}\\Windows-10-Sophia-Script-master"))
             {
-                Directory.Delete($"{Paths.BasePath}\\Windows10Debloater-master", true);
-                Directory.Delete($"{Paths.BasePath}\\Windows-10-Sophia-Script-master", true);
+                Directory.Delete($"{paths.BasePath}\\Windows10Debloater-master", true);
+                Directory.Delete($"{paths.BasePath}\\Windows-10-Sophia-Script-master", true);
             }
 
             // Show a message prompting the user that a reboot is required (if any of these condition below is true).

@@ -12,6 +12,8 @@ namespace WindowsOptimizations.Core.Patches
     /// </summary>
     public static class NetworkPatch
     {
+        private static readonly RegistryKeys RegistryKeys = new();
+
         /// <summary>
         /// Limits throughput, especially in high-speed, high-latency environments, such as most internet connections.
         /// <para>This method sets the auto-tuning level to 'normal'.</para>
