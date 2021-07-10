@@ -13,7 +13,7 @@ namespace WindowsOptimizations.Core.Handlers.Configuration.Data
         /// </summary>
         public WindowsServicesData()
         {
-            ServiceCollection = new string[]
+            ServiceCollection = new[]
             {
                 "AJRouter", // AllJoyn Router Service
                 "ALG", // Application Layer Gateway Service
