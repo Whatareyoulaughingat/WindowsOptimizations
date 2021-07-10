@@ -43,7 +43,7 @@ namespace WindowsOptimizations.WPF.ViewModels
             set { this.RaiseAndSetIfChanged(ref timerResolutionCurrentValue, $"Current timer resolution value: {value}ms"); }
         }
 
-        private PatchExecutionCheck patchExecutionCheck = new();
+        private readonly PatchExecutionCheck patchExecutionCheck = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
