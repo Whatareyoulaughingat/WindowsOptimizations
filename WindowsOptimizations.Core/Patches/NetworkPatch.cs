@@ -10,7 +10,7 @@ namespace WindowsOptimizations.Core.Patches
     /// <summary>
     /// Various kernel and powershell patches that may improve or provide a more stable internet speed.
     /// </summary>
-    public class NetworkPatch
+    public static class NetworkPatch
     {
         /// <summary>
         /// Limits throughput, especially in high-speed, high-latency environments, such as most internet connections.

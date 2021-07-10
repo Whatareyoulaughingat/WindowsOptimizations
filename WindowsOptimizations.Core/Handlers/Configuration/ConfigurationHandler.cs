@@ -8,7 +8,7 @@ namespace WindowsOptimizations.Core.Handlers.Configuration
     /// <summary>
     /// Handles the way JSON serialization and deserialization works.
     /// </summary>
-    public class ConfigurationHandler
+    public static class ConfigurationHandler
     {
         /// <summary>
         /// Gets or sets a value indicating the instance of <see cref="WindowsServicesData"/>.

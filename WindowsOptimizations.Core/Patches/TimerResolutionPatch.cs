@@ -6,22 +6,22 @@ namespace WindowsOptimizations.Core.Patches
     /// <summary>
     /// Gets information about the system timer with the ability to change it to the maximum or minimum possible values.
     /// </summary>
-    public class TimerResolutionPatch
+    public static class TimerResolutionPatch
     {
         /// <summary>
         /// Gets the maximum timer resolution value.
         /// </summary>
-        public static int MaximumResolution { get; private protected set; }
+        public static int MaximumResolution { get; private set; }
 
         /// <summary>
         /// Gets the minimum timer resolution value.
         /// </summary>
-        public static int MinimumResolution { get; private protected set; }
+        public static int MinimumResolution { get; private set; }
 
         /// <summary>
         /// Gets the current timer resolution value.
         /// </summary>
-        public static int CurrentResolution { get; private protected set; }
+        public static int CurrentResolution { get; private set; }
 
         /// <summary>
         /// Sets the system's timer to the lowest value possible (0.5ms).

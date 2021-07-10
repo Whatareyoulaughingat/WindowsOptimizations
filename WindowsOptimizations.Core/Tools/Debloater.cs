@@ -10,7 +10,7 @@ namespace WindowsOptimizations.Core.Tools
     /// <summary>
     /// A class containing methods for debloating windows.
     /// </summary>
-    public class Debloater
+    public static class Debloater
     {
         /// <summary>
         /// Sets the execution policy to be unrestricted. Debloating won't happen if this isn't executed first.

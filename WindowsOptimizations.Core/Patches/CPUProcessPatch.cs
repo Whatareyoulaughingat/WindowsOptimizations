@@ -12,7 +12,7 @@ namespace WindowsOptimizations.Core.Patches
     /// <summary>
     /// Various kernel patches that reduce CPU processes thus reducing resource usage.
     /// </summary>
-    public class CPUProcessPatch
+    public static class CPUProcessPatch
     {
         /// <summary>
         /// Limits the splitting threshold of SvcHosts.

@@ -5,7 +5,7 @@ namespace WindowsOptimizations.Core.Native
     /// <summary>
     /// Includes methods for accessing the native Win32 API through P/Invoke.
     /// </summary>
-    public class NativeMethods
+    public static class NativeMethods
     {
         /// <summary>
         /// Sets the resolution of the system timer in the calling process context. The resolution value is in 100ns units, so a value of 10000 is one millisecond.

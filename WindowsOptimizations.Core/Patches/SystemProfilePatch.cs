@@ -7,7 +7,7 @@ namespace WindowsOptimizations.Core.Patches
     /// <summary>
     /// Various kernel patches for optimizing the system profile.
     /// </summary>
-    public class SystemProfilePatch
+    public static class SystemProfilePatch
     {
         /// <summary>
         /// Increases overall system responsiveness.

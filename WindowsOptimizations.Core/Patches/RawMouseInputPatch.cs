@@ -8,7 +8,7 @@ namespace WindowsOptimizations.Core.Patches
     /// <summary>
     /// Various kernel patches for reducing mouse input latency.
     /// </summary>
-    public class RawMouseInputPatch
+    public static class RawMouseInputPatch
     {
         /// <summary>
         /// Disables pointer acceleration completely by changing specific registry values.

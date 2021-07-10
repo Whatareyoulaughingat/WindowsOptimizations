@@ -7,7 +7,7 @@ namespace WindowsOptimizations.Core.Patches
     /// <summary>
     /// Handles the way Windows services will run.
     /// </summary>
-    public class WindowsServicePatch
+    public static class WindowsServicePatch
     {
         /// <summary>
         /// Disabled a specific Windows service.
