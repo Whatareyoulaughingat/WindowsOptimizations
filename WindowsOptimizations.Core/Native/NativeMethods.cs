@@ -14,7 +14,7 @@ namespace WindowsOptimizations.Core.Native
         /// <param name="setResolution">A value whether or not to set the resolution.</param>
         /// <param name="currentResolution">The current resolution value after the desired resolution has been set.</param>
         [DllImport("ntdll.dll", SetLastError = true)]
-        public static extern void NtSetTimerResolution(int desiredResolution, bool setResolution, ref int currentResolution);
+        public static extern void NtSetTimerResolution(int desiredResolution, bool setResolution, int currentResolution);
 
         /// <summary>
         /// Returns the resolution of the system timer in the context of the calling process.
