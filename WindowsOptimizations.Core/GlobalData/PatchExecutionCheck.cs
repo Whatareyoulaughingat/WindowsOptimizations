@@ -56,7 +56,7 @@ namespace WindowsOptimizations.Core.GlobalData
             HasReducedCPUProcesses) == (other.HasDisabledUnnecessaryWindowsServices, other.HasReducedMouseInputLatency, other.HasOptimizedSystemProfile, other.HasDebloatedWindows, other.HasOptimizedNetworkOptions, other.HasReducedCPUProcesses);
 
         public override bool Equals(object obj)
-            => (obj is PatchExecutionCheck metrics) && Equals(metrics);
+            => (obj is PatchExecutionCheck patchExecutionCheck) && Equals(patchExecutionCheck);
 
         public override int GetHashCode()
             => (HasDisabledUnnecessaryWindowsServices,

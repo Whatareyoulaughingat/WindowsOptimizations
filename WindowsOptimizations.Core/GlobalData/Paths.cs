@@ -1,20 +1,43 @@
 ﻿using System;
 
+#pragma warning disable CA1822
+
 namespace WindowsOptimizations.Core.GlobalData
 {
     /// <summary>
     /// A struct containing directory and file paths to be used for this application.
     /// </summary>
-    public struct Paths
+    public struct Paths : IEquatable<Paths>
     {
         /// <summary>
-        /// The base directory path of this application.
+        /// Gets the base directory path of this application.
         /// </summary>
-        public static readonly string BasePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\WindowsOptimizations";
+        public readonly string BasePath
+        {
+            get => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\WindowsOptimizations";
+        }
 
         /// <summary>
-        /// A file used for configuring which unnecessary windows service is going to be disabled.
+        /// Gets a file used for configuring which unnecessary windows service is going to be disabled.
         /// </summary>
-        public static readonly string UnnecessaryWindowsServicesJsonFile = BasePath + "\\UnnecessaryWindowsServices.json";
+        public readonly string UnnecessaryWindowsServicesJsonFile
+        {
+            get => BasePath + "\\UnnecessaryWindowsServices.json";
+        }
+
+        public bool Equals(Paths other)
+            => (BasePath, UnnecessaryWindowsServicesJsonFile) == (other.BasePath, other.UnnecessaryWindowsServicesJsonFile);
+
+        public override bool Equals(object obj)
+            => (obj is Paths paths) && Equals(paths);
+
+        public override int GetHashCode()
+            => (BasePath, UnnecessaryWindowsServicesJsonFile).GetHashCode();
+
+        public static bool operator ==(Paths left, Paths right)
+            => Equals(left, right);
+
+        public static bool operator !=(Paths left, Paths right)
+            => !Equals(left, right);
     }
 }

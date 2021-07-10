@@ -1,65 +1,137 @@
-﻿using Microsoft.Win32;
+﻿using System;
+using Microsoft.Win32;
+
+#pragma warning disable CA1822
 
 namespace WindowsOptimizations.Core.GlobalData
 {
     /// <summary>
     /// A struct containing various variables that store individual registry key paths used by this application.
     /// </summary>
-    public struct RegistryKeys
+    public struct RegistryKeys : IEquatable<RegistryKeys>
     {
         /// <summary>
-        /// The registry key location of the current TCP congestion provider.
+        /// Gets the registry key location of the current TCP congestion provider.
         /// </summary>
-        public static readonly string TCPCongestionProviderKey = $"{Registry.LocalMachine}" + "\\SYSTEM\\CurrentControlSet\\Control\\Nsi\\{eb004a03-9b1a-11d4-9123-0050047759bc}\\26";
+        public readonly string TCPCongestionProviderKey
+        {
+            get => $"{Registry.LocalMachine}" + "\\SYSTEM\\CurrentControlSet\\Control\\Nsi\\{eb004a03-9b1a-11d4-9123-0050047759bc}\\26";
+        }
 
         /// <summary>
-        /// The registry key location of the Tcpip Parameters folder..
+        /// Gets the registry key location of the Tcpip Parameters folder..
         /// </summary>
-        public static readonly string TcpipParametersKey = $"{Registry.LocalMachine}\\SYSTEM\\CurrentControlSet\\Service\\Tcpip\\Parameters";
+        public readonly string TcpipParametersKey
+        {
+            get => $"{Registry.LocalMachine}\\SYSTEM\\CurrentControlSet\\Service\\Tcpip\\Parameters";
+        }
 
         /// <summary>
-        /// The registry key location of the Service Provider folder.
+        /// Gets the registry key location of the Service Provider folder.
         /// </summary>
-        public static readonly string ServiceProviderKey = $"{Registry.LocalMachine}\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\ServiceProvider";
+        public readonly string ServiceProviderKey
+        {
+            get => $"{Registry.LocalMachine}\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\ServiceProvider";
+        }
 
         /// <summary>
-        /// The registry key location of the System Profile folder.
+        /// Gets the registry key location of the System Profile folder.
         /// </summary>
-        public static readonly string SystemProfileKey = $"{Registry.LocalMachine}\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile";
+        public readonly string SystemProfileKey
+        {
+            get => $"{Registry.LocalMachine}\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile";
+        }
 
         /// <summary>
-        /// The registry key location of the Tcpip Interfaces folder.
+        /// Gets the registry key location of the Tcpip Interfaces folder.
         /// </summary>
-        public static readonly string TcpipInterfacesKey = $"{Registry.LocalMachine}\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces";
+        public readonly string TcpipInterfacesKey
+        {
+            get => $"{Registry.LocalMachine}\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces";
+        }
 
         /// <summary>
-        /// The registry key location of the Memory Management folder.
+        /// Gets the registry key location of the Memory Management folder.
         /// </summary>
-        public static readonly string MemoryManagementKey = $"{Registry.LocalMachine}\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Memory Management";
+        public readonly string MemoryManagementKey
+        {
+            get => $"{Registry.LocalMachine}\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Memory Management";
+        }
 
         /// <summary>
-        /// The registry key location of the Psched folder.
+        /// Gets the registry key location of the Psched folder.
         /// </summary>
-        public static readonly string PschedKey = $"{Registry.LocalMachine}\\SOFTWARE\\Policies\\Microsoft\\Windows\\Psched";
+        public readonly string PschedKey
+        {
+            get => $"{Registry.LocalMachine}\\SOFTWARE\\Policies\\Microsoft\\Windows\\Psched";
+        }
 
         /// <summary>
-        /// The registry key location of the Mouse folder.
+        /// Gets the registry key location of the Mouse folder.
         /// </summary>
-        public static readonly string MouseKey = $"{Registry.CurrentUser}\\Control Panel\\Mouse";
+        public readonly string MouseKey
+        {
+            get => $"{Registry.CurrentUser}\\Control Panel\\Mouse";
+        }
 
         /// <summary>
-        /// The registry key location of ThemeManager.
+        /// Gets the registry key location of ThemeManager.
         /// </summary>
-        public static readonly string ThemeManagerKey = $"{Registry.CurrentUser}\\Software\\Microsoft\\Windows\\CurrentVersion\\ThemeManager";
+        public readonly string ThemeManagerKey
+        {
+            get => $"{Registry.CurrentUser}\\Software\\Microsoft\\Windows\\CurrentVersion\\ThemeManager";
+        }
 
         /// <summary>
-        /// The registry key location of the Game folder.
+        /// Gets the registry key location of the Game folder.
         /// </summary>
-        public static readonly string GameTaskSystemProfileKey = $"{Registry.LocalMachine}\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Games";
+        public readonly string GameTaskSystemProfileKey
+        {
+            get => $"{Registry.LocalMachine}\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Games";
+        }
 
         /// <summary>
-        /// The registry key location of the Control folder.
+        /// Gets the registry key location of the Control folder.
         /// </summary>
-        public static readonly string CurrentControlKey = $"{Registry.LocalMachine}\\SYSTEM\\CurrentControlSet\\Control";
+        public readonly string CurrentControlKey
+        {
+            get => $"{Registry.LocalMachine}\\SYSTEM\\CurrentControlSet\\Control";
+        }
+
+        public bool Equals(RegistryKeys other)
+            => (TCPCongestionProviderKey,
+            TcpipParametersKey,
+            ServiceProviderKey,
+            SystemProfileKey,
+            TcpipInterfacesKey,
+            MemoryManagementKey,
+            PschedKey,
+            MouseKey,
+            ThemeManagerKey,
+            GameTaskSystemProfileKey,
+            CurrentControlKey) == (other.TCPCongestionProviderKey, other.TcpipParametersKey, other.ServiceProviderKey, other.SystemProfileKey, other.TcpipInterfacesKey, other.MemoryManagementKey, other.PschedKey, other.MouseKey, other.ThemeManagerKey, other.GameTaskSystemProfileKey, other.CurrentControlKey);
+
+        public override bool Equals(object obj)
+            => (obj is RegistryKeys registryKeys) && Equals(registryKeys);
+
+        public override int GetHashCode()
+            => (TCPCongestionProviderKey,
+            TcpipParametersKey,
+            ServiceProviderKey,
+            SystemProfileKey,
+            TcpipInterfacesKey,
+            MemoryManagementKey,
+            PschedKey,
+            MouseKey,
+            ThemeManagerKey,
+            GameTaskSystemProfileKey,
+            CurrentControlKey)
+            .GetHashCode();
+
+        public static bool operator ==(RegistryKeys left, RegistryKeys right)
+            => Equals(left, right);
+
+        public static bool operator !=(RegistryKeys left, RegistryKeys right)
+            => !Equals(left, right);
     }
 }
