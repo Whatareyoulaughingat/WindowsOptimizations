@@ -1,6 +1,8 @@
 ﻿using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
+#pragma warning disable SA1600
+
 namespace WindowsOptimizations.WPF.ViewModels
 {
     /// <summary>

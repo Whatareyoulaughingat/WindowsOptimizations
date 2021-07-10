@@ -22,19 +22,19 @@ namespace WindowsOptimizations.WPF.Views
                 this.OneWayBind(
                     ViewModel,
                     vmProperty => vmProperty.ApplicationLicenseInfo,
-                    viewProperty => viewProperty.License.Content)
+                    viewProperty => viewProperty.License.Text)
                 .DisposeWith(disposableRegistration);
 
                 this.OneWayBind(
                     ViewModel,
                     vmProperty => vmProperty.DisclaimerInfo,
-                    viewProperty => viewProperty.Disclaimer.Content)
+                    viewProperty => viewProperty.Disclaimer.Text)
                 .DisposeWith(disposableRegistration);
 
                 this.OneWayBind(
                     ViewModel,
                     vmProperty => vmProperty.AcknowledgementsInfo,
-                    viewProperty => viewProperty.Acknowledgements.Content)
+                    viewProperty => viewProperty.Acknowledgements.Text)
                 .DisposeWith(disposableRegistration);
             });
         }

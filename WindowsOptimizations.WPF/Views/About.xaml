@@ -11,7 +11,7 @@
         x:TypeArguments="vm:AboutViewModel"
         mc:Ignorable="d"
         Title="About"
-        Height="550"
+        Height="620"
         Width="750"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -33,7 +33,7 @@
                Foreground="{DynamicResource MaterialDesignDarkForeground}"
                FontSize="20"/>
 
-        <Label Width="auto"
+        <TextBlock Width="auto"
                Height="30"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
@@ -52,7 +52,7 @@
                Foreground="{DynamicResource MaterialDesignDarkForeground}"
                FontSize="20"/>
 
-        <Label Width="auto"
+        <TextBlock Width="auto"
                Height="30"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
@@ -71,7 +71,7 @@
                Foreground="{DynamicResource MaterialDesignDarkForeground}"
                FontSize="20"/>
 
-        <Label Width="auto"
+        <TextBlock Width="auto"
                Height="30"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
