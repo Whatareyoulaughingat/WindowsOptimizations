@@ -12,6 +12,7 @@ using WindowsOptimizations.WPF.Views;
 
 #pragma warning disable SA1600
 #pragma warning disable SA1201
+#pragma warning disable CA1822
 
 // Source: https://stackoverflow.com/questions/4525854/remove-trailing-zeros --> ToString("G29")
 namespace WindowsOptimizations.WPF.ViewModels
@@ -42,6 +43,8 @@ namespace WindowsOptimizations.WPF.ViewModels
             set { this.RaiseAndSetIfChanged(ref timerResolutionCurrentValue, $"Current timer resolution value: {value}ms"); }
         }
 
+        private PatchExecutionCheck patchExecutionCheck = new();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
@@ -69,7 +72,7 @@ namespace WindowsOptimizations.WPF.ViewModels
             => await Dispatcher.CurrentDispatcher.BeginInvoke(() => WindowManager.ShowBlockingView<WindowsServicesApplier, WindowsServicesApplierViewModel>());
 
         public ReactiveCommand<Unit, Unit> ReduceMouseInputLatencyCommand { get; private set; }
-        public static async Task ReduceMouseInputLatency()
+        public async Task ReduceMouseInputLatency()
         {
             await Dispatcher.CurrentDispatcher.BeginInvoke(async () =>
             {
@@ -78,13 +81,13 @@ namespace WindowsOptimizations.WPF.ViewModels
                     RawMouseInputPatch.SetPointerSensitivityToDefault(),
                     RawMouseInputPatch.SetPointerSensitivityToDefault());
 
-                PatchExecutionCheck.HasReducedMouseInputLatency = true;
+                patchExecutionCheck.HasReducedMouseInputLatency = true;
                 MessageBox.Show("Operation completed sucessfully.", nameof(SystemProfilePatch), MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }
 
         public ReactiveCommand<Unit, Unit> OptimizeSystemProfileCommand { get; private set; }
-        public static async Task OptimizeSystemProfile()
+        public async Task OptimizeSystemProfile()
         {
             await Dispatcher.CurrentDispatcher.BeginInvoke(async () =>
             {
@@ -94,7 +97,7 @@ namespace WindowsOptimizations.WPF.ViewModels
                     SystemProfilePatch.SetSchedulingCategoryToHigh(),
                     SystemProfilePatch.SetSFIOPriorityToHigh());
 
-                PatchExecutionCheck.HasOptimizedSystemProfile = true;
+                patchExecutionCheck.HasOptimizedSystemProfile = true;
                 MessageBox.Show("Operation completed sucessfully.", nameof(SystemProfilePatch), MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }
@@ -117,7 +120,7 @@ namespace WindowsOptimizations.WPF.ViewModels
         }
 
         public ReactiveCommand<Unit, Unit> DebloatWindowsCommand { get; private set; }
-        public static async Task DebloatWindows()
+        public async Task DebloatWindows()
         {
             await Dispatcher.CurrentDispatcher.BeginInvoke(async () =>
             {
@@ -126,12 +129,12 @@ namespace WindowsOptimizations.WPF.ViewModels
                 .ContinueWith(async x => await Debloater.DebloatWindowsFirstPhaseAsync())
                 .ContinueWith(async x => await Debloater.DebloatWindowsSecondPhase());
 
-                PatchExecutionCheck.HasDebloatedWindows = true;
+                patchExecutionCheck.HasDebloatedWindows = true;
             });
         }
 
         public ReactiveCommand<Unit, Unit> OptimizeNetworkOptionsCommand { get; private set; }
-        public static async Task OptimizeNetworkOptions()
+        public async Task OptimizeNetworkOptions()
         {
             await Dispatcher.CurrentDispatcher.BeginInvoke(async () =>
             {
@@ -156,22 +159,22 @@ namespace WindowsOptimizations.WPF.ViewModels
                     NetworkPatch.ConfigureDynamicPortAllocation(),
                     NetworkPatch.DisableReservableBandwidthLimit());
 
-                PatchExecutionCheck.HasOptimizedNetworkOptions = true;
+                patchExecutionCheck.HasOptimizedNetworkOptions = true;
                 MessageBox.Show("Operation completed sucessfully.", "Network Patch", MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }
 
         public ReactiveCommand<Unit, Unit> ReduceCPUProcessesCommand { get; private set; }
-        public static async Task ReduceCPUProcesses()
+        public async Task ReduceCPUProcesses()
         {
             await Dispatcher.CurrentDispatcher.BeginInvoke(async () => await CPUProcessPatch.LimitSvcHostSplitting());
 
-            PatchExecutionCheck.HasReducedCPUProcesses = true;
+            patchExecutionCheck.HasReducedCPUProcesses = true;
             MessageBox.Show("Operation completed sucessfully.", "CPU Process Patch", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         public ReactiveCommand<Unit, Unit> AboutCommand { get; private set; }
-        public static async Task About()
+        public async Task About()
             => await Dispatcher.CurrentDispatcher.BeginInvoke(() => WindowManager.ShowBlockingView<About, AboutViewModel>());
     }
 }
