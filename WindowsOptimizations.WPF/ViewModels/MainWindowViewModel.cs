@@ -58,7 +58,7 @@ namespace WindowsOptimizations.WPF.ViewModels
             DebloatWindowsCommand = ReactiveCommand.CreateFromTask(async () => await DebloatWindows().ConfigureAwait(false));
             OptimizeNetworkOptionsCommand = ReactiveCommand.CreateFromTask(async () => await OptimizeNetworkOptions().ConfigureAwait(false));
             ReduceCPUProcessesCommand = ReactiveCommand.CreateFromTask(async () => await ReduceCPUProcesses().ConfigureAwait(false));
-            AboutCommand = ReactiveCommand.CreateFromTask(async () => await About());
+            AboutCommand = ReactiveCommand.CreateFromTask(async () => await About().ConfigureAwait(false));
 
             // Getting timer resolution info and assigning it to the appropriate variables.
             TimerResolutionPatch.GetTimerResolutionInfo();

@@ -76,7 +76,7 @@ namespace WindowsOptimizations.WPF.ViewModels
                 // Add the new custom items to the collection.
                 for (int i = 0; i < ConfigurationHandler.WindowsServicesDataInstance.ServiceCollection.Length; i++)
                 {
-                    UnnecessaryServices.Add(new WindowsService()
+                    UnnecessaryServices.Add(new WindowsService
                     {
                         Name = ConfigurationHandler.WindowsServicesDataInstance.ServiceCollection[i],
                     });
@@ -109,13 +109,13 @@ namespace WindowsOptimizations.WPF.ViewModels
         public ReactiveCommand<Unit, Unit> DisableSelectedServicesCommand { get; private set; }
         public async Task DisableSelectedServices()
         {
-            await Dispatcher.CurrentDispatcher.BeginInvoke(() =>
+            await Dispatcher.CurrentDispatcher.BeginInvoke(async () =>
             {
                 for (int i = 0; i < UnnecessaryServices.Count; i++)
                 {
                     if (UnnecessaryServices[i].IsSelected)
                     {
-                        WindowsServicePatch.DisableService(UnnecessaryServices[i]);
+                        await WindowsServicePatch.DisableService(UnnecessaryServices[i]);
                     }
                 }
             });
@@ -124,13 +124,13 @@ namespace WindowsOptimizations.WPF.ViewModels
         public ReactiveCommand<Unit, Unit> EnableSelectedServicesCommand { get; private set; }
         public async Task EnableSelectedServices()
         {
-            await Dispatcher.CurrentDispatcher.BeginInvoke(() =>
+            await Dispatcher.CurrentDispatcher.BeginInvoke(async () =>
             {
                 for (int i = 0; i < UnnecessaryServices.Count; i++)
                 {
                     if (UnnecessaryServices[i].IsSelected)
                     {
-                        WindowsServicePatch.EnableService(UnnecessaryServices[i]);
+                        await WindowsServicePatch.EnableService(UnnecessaryServices[i]);
                     }
                 }
             });
