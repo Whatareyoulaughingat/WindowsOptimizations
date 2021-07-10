@@ -10,7 +10,7 @@ using WindowsOptimizations.Core.Handlers.Configuration;
 namespace WindowsOptimizations.WPF
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    /// Interaction logic for App.xaml.
     /// </summary>
     public partial class App : Application
     {
@@ -35,7 +35,9 @@ namespace WindowsOptimizations.WPF
             }
 
             // Show a message prompting the user that a reboot is required (if any of these condition below is true).
-            if (PatchExecutionCheck.HasDisabledUnnecessaryWindowsServices || PatchExecutionCheck.HasReducedMouseInputLatency || PatchExecutionCheck.HasOptimizedSystemProfile || PatchExecutionCheck.HasDebloatedWindows || PatchExecutionCheck.HasOptimizedNetworkOptions || PatchExecutionCheck.HasReducedCPUProcesses)
+            PatchExecutionCheck patchExecutionCheck = new();
+
+            if (patchExecutionCheck.HasDisabledUnnecessaryWindowsServices || patchExecutionCheck.HasReducedMouseInputLatency || patchExecutionCheck.HasOptimizedSystemProfile || patchExecutionCheck.HasDebloatedWindows || patchExecutionCheck.HasOptimizedNetworkOptions || patchExecutionCheck.HasReducedCPUProcesses)
             {
                 MessageBoxResult result = MessageBox.Show("Some changes require a reboot to take effect. Would you like reboot now?", "Windows Optimizations", MessageBoxButton.YesNo, MessageBoxImage.Information);
 
