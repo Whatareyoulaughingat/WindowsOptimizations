@@ -34,15 +34,15 @@ namespace WindowsOptimizations.WPF.ViewModels
         public WindowsServicesApplierViewModel()
         {
             // Create commands.
-            SelectAllCommand = ReactiveCommand.CreateFromTask(async () => await SelectAll());
-            UseCustomCollectionCommand = ReactiveCommand.CreateFromTask(async () => await UseCustomCollection());
-            DisableSelectedServicesCommand = ReactiveCommand.CreateFromTask(async () => await DisableSelectedServices());
-            EnableSelectedServicesCommand = ReactiveCommand.CreateFromTask(async () => await EnableSelectedServices());
+            SelectAllCommand = ReactiveCommand.CreateFromTask(async () => await SelectAll().ConfigureAwait(false));
+            UseCustomCollectionCommand = ReactiveCommand.CreateFromTask(async () => await UseCustomCollection().ConfigureAwait(false));
+            DisableSelectedServicesCommand = ReactiveCommand.CreateFromTask(async () => await DisableSelectedServices().ConfigureAwait(false));
+            EnableSelectedServicesCommand = ReactiveCommand.CreateFromTask(async () => await EnableSelectedServices().ConfigureAwait(false));
 
             // Populate the listview.
             for (int i = 0; i < ConfigurationHandler.WindowsServicesDataInstance.ServiceCollection.Length; i++)
             {
-                UnnecessaryServices.Add(new WindowsService()
+                UnnecessaryServices.Add(new WindowsService
                 {
                     Name = ConfigurationHandler.WindowsServicesDataInstance.ServiceCollection[i],
                 });

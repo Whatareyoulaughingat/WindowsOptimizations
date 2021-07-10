@@ -51,13 +51,13 @@ namespace WindowsOptimizations.WPF.ViewModels
         public MainWindowViewModel()
         {
             // Setting up the commands.
-            DisableUnnecessaryWindowsServicesCommand = ReactiveCommand.CreateFromTask(async () => await DisableUnnecessaryWindowsServices());
-            ReduceMouseInputLatencyCommand = ReactiveCommand.CreateFromTask(async () => await ReduceMouseInputLatency());
-            OptimizeSystemProfileCommand = ReactiveCommand.CreateFromTask(async () => await OptimizeSystemProfile());
-            SetSystemTimerToMaximumResolutionCommand = ReactiveCommand.CreateFromTask(async () => await SetSystemTimerToMaximumResolution());
-            DebloatWindowsCommand = ReactiveCommand.CreateFromTask(async () => await DebloatWindows());
-            OptimizeNetworkOptionsCommand = ReactiveCommand.CreateFromTask(async () => await OptimizeNetworkOptions());
-            ReduceCPUProcessesCommand = ReactiveCommand.CreateFromTask(async () => await ReduceCPUProcesses());
+            DisableUnnecessaryWindowsServicesCommand = ReactiveCommand.CreateFromTask(async () => await DisableUnnecessaryWindowsServices().ConfigureAwait(false));
+            ReduceMouseInputLatencyCommand = ReactiveCommand.CreateFromTask(async () => await ReduceMouseInputLatency().ConfigureAwait(false));
+            OptimizeSystemProfileCommand = ReactiveCommand.CreateFromTask(async () => await OptimizeSystemProfile().ConfigureAwait(false));
+            SetSystemTimerToMaximumResolutionCommand = ReactiveCommand.CreateFromTask(async () => await SetSystemTimerToMaximumResolution().ConfigureAwait(false));
+            DebloatWindowsCommand = ReactiveCommand.CreateFromTask(async () => await DebloatWindows().ConfigureAwait(false));
+            OptimizeNetworkOptionsCommand = ReactiveCommand.CreateFromTask(async () => await OptimizeNetworkOptions().ConfigureAwait(false));
+            ReduceCPUProcessesCommand = ReactiveCommand.CreateFromTask(async () => await ReduceCPUProcesses().ConfigureAwait(false));
             AboutCommand = ReactiveCommand.CreateFromTask(async () => await About());
 
             // Getting timer resolution info and assigning it to the appropriate variables.

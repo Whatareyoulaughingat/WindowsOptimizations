@@ -28,7 +28,7 @@ namespace WindowsOptimizations.Core.Handlers.Configuration
                 await JsonSerializer.SerializeAsync(serializationStream, new WindowsServicesData(), new JsonSerializerOptions { WriteIndented = true });
             }
 
-            await DeserializeAsync(jsonFilePath);
+            await DeserializeAsync(jsonFilePath).ConfigureAwait(false);
         }
 
         /// <summary>
