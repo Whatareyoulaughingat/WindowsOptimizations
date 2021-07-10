@@ -72,7 +72,7 @@
                FontSize="20"/>
 
         <TextBlock Width="auto"
-               Height="30"
+               Height="60"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
                Margin="10, 240"
