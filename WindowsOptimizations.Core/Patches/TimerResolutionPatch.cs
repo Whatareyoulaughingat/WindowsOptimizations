@@ -9,19 +9,19 @@ namespace WindowsOptimizations.Core.Patches
     public class TimerResolutionPatch
     {
         /// <summary>
-        /// The minimum possible system timer resolution.
+        /// Gets the maximum timer resolution value.
         /// </summary>
-        public static int MinimumResolution;
+        public static int MaximumResolution { get; private protected set; }
 
         /// <summary>
-        /// The maximum possible system timer resolution.
+        /// Gets the minimum timer resolution value.
         /// </summary>
-        public static int MaximumResolution;
+        public static int MinimumResolution { get; private protected set; }
 
         /// <summary>
-        /// The current system timer resolution.
+        /// Gets the current timer resolution value.
         /// </summary>
-        public static int CurrentResolution;
+        public static int CurrentResolution { get; private protected set; }
 
         /// <summary>
         /// Sets the system's timer to the lowest value possible (0.5ms).
@@ -29,7 +29,7 @@ namespace WindowsOptimizations.Core.Patches
         /// <returns>[<see cref="TimerResolutionPatch"/>] An asynchronous operation.</returns>
         public static Task SetMaximumTimerResolutionValue()
         {
-            NativeMethods.NtSetTimerResolution(MaximumResolution, true, ref CurrentResolution);
+            NativeMethods.NtSetTimerResolution(MaximumResolution, true, CurrentResolution);
             return Task.CompletedTask;
         }
 
