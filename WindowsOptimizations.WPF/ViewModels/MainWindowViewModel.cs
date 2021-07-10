@@ -10,6 +10,9 @@ using WindowsOptimizations.Core.Patches;
 using WindowsOptimizations.Core.Tools;
 using WindowsOptimizations.WPF.Views;
 
+#pragma warning disable SA1600
+#pragma warning disable SA1201
+
 // Source: https://stackoverflow.com/questions/4525854/remove-trailing-zeros --> ToString("G29")
 namespace WindowsOptimizations.WPF.ViewModels
 {
