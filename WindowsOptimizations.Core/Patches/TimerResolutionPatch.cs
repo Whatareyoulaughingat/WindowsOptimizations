@@ -39,7 +39,7 @@ namespace WindowsOptimizations.Core.Patches
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
         public static Task GetTimerResolutionInfo()
         {
-            _ = NativeMethods.NtQueryTimerResolution(out int maximumResolution, out int minimumResolution, out int currentResolution);
+            NativeMethods.NtQueryTimerResolution(out int maximumResolution, out int minimumResolution, out int currentResolution);
 
             MaximumResolution = maximumResolution;
             MinimumResolution = minimumResolution;
