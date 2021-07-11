@@ -54,7 +54,7 @@ namespace WindowsOptimizations.WPF.ViewModels
         {
             await Dispatcher.CurrentDispatcher.BeginInvoke(async () =>
             {
-                OpenFileDialog fileDialog = new ()
+                OpenFileDialog fileDialog = new()
                 {
                     Title = "Select a custom JSON collection",
                     CheckFileExists = true,
