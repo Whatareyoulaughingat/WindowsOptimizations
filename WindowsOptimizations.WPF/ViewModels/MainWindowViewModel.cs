@@ -43,7 +43,7 @@ namespace WindowsOptimizations.WPF.ViewModels
             set { this.RaiseAndSetIfChanged(ref timerResolutionCurrentValue, $"Current timer resolution value: {value}ms"); }
         }
 
-        private PatchExecutionCheck patchExecutionCheck = new();
+        public PatchExecutionCheck PatchExecutionCheck = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
@@ -81,7 +81,7 @@ namespace WindowsOptimizations.WPF.ViewModels
                     RawMouseInputPatch.SetPointerSensitivityToDefault(),
                     RawMouseInputPatch.SetPointerSensitivityToDefault());
 
-                patchExecutionCheck.HasReducedMouseInputLatency = true;
+                PatchExecutionCheck.HasReducedMouseInputLatency = true;
                 MessageBox.Show("Operation completed sucessfully.", nameof(SystemProfilePatch), MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }
@@ -97,7 +97,7 @@ namespace WindowsOptimizations.WPF.ViewModels
                     SystemProfilePatch.SetSchedulingCategoryToHigh(),
                     SystemProfilePatch.SetSFIOPriorityToHigh());
 
-                patchExecutionCheck.HasOptimizedSystemProfile = true;
+                PatchExecutionCheck.HasOptimizedSystemProfile = true;
                 MessageBox.Show("Operation completed sucessfully.", nameof(SystemProfilePatch), MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }
@@ -129,7 +129,7 @@ namespace WindowsOptimizations.WPF.ViewModels
                 .ContinueWith(async x => await Debloater.DebloatWindowsFirstPhaseAsync())
                 .ContinueWith(async x => await Debloater.DebloatWindowsSecondPhase());
 
-                patchExecutionCheck.HasDebloatedWindows = true;
+                PatchExecutionCheck.HasDebloatedWindows = true;
             });
         }
 
@@ -159,7 +159,7 @@ namespace WindowsOptimizations.WPF.ViewModels
                     NetworkPatch.ConfigureDynamicPortAllocation(),
                     NetworkPatch.DisableReservableBandwidthLimit());
 
-                patchExecutionCheck.HasOptimizedNetworkOptions = true;
+                PatchExecutionCheck.HasOptimizedNetworkOptions = true;
                 MessageBox.Show("Operation completed sucessfully.", "Network Patch", MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }
@@ -169,7 +169,7 @@ namespace WindowsOptimizations.WPF.ViewModels
         {
             await Dispatcher.CurrentDispatcher.BeginInvoke(async () => await CPUProcessPatch.LimitSvcHostSplitting());
 
-            patchExecutionCheck.HasReducedCPUProcesses = true;
+            PatchExecutionCheck.HasReducedCPUProcesses = true;
             MessageBox.Show("Operation completed sucessfully.", "CPU Process Patch", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
