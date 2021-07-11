@@ -44,6 +44,11 @@ namespace WindowsOptimizations.WPF.ViewModels
         }
 
         private PatchExecutionCheck patchExecutionCheck = new();
+        public PatchExecutionCheck PatchExecutionCheck
+        {
+            get { return patchExecutionCheck; }
+            set { this.RaiseAndSetIfChanged(ref patchExecutionCheck, value); }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
