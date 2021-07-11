@@ -26,7 +26,7 @@
         <!--Licensing information.-->
         <Label Content="License"
                Width="100"
-               Height="30"
+               Height="35"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
                Margin="10, 0"
@@ -37,7 +37,7 @@
                Height="30"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
-               Margin="10, 40"
+               Margin="10, 45"
                Foreground="{DynamicResource MaterialDesignDarkForeground}"
                FontSize="16"
                x:Name="License" />
@@ -45,7 +45,7 @@
         <!--Disclaimer information.-->
         <Label Content="Disclaimer"
                Width="110"
-               Height="30"
+               Height="35"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
                Margin="10, 100"
@@ -56,15 +56,15 @@
                Height="30"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
-               Margin="10, 140"
+               Margin="10, 145"
                Foreground="{DynamicResource MaterialDesignDarkForeground}"
                FontSize="16"
                x:Name="Disclaimer" />
         
         <!--Acknowledgements information.-->
-        <Label Content="Disclaimer"
-               Width="110"
-               Height="30"
+        <Label Content="Acknowledgements"
+               Width="200"
+               Height="35"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
                Margin="10, 200"
@@ -75,7 +75,7 @@
                Height="60"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
-               Margin="10, 240"
+               Margin="10, 245"
                Foreground="{DynamicResource MaterialDesignDarkForeground}"
                FontSize="16"
                x:Name="Acknowledgements" />
