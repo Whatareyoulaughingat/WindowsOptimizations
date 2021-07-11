@@ -6,7 +6,7 @@ using WindowsOptimizations.Core.GlobalData;
 namespace WindowsOptimizations.Core.Patches
 {
     /// <summary>
-    /// Various kernel patches for reducing mouse input latency.
+    /// Various registry changes for reducing mouse input latency.
     /// </summary>
     public static class RawMouseInputPatch
     {

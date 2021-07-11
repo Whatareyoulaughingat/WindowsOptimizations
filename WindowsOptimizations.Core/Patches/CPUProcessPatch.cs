@@ -10,7 +10,7 @@ using WindowsOptimizations.Core.GlobalData;
 namespace WindowsOptimizations.Core.Patches
 {
     /// <summary>
-    /// Various kernel patches that reduce CPU processes thus reducing resource usage.
+    /// Various registry changes that reduce CPU processes thus reducing resource usage.
     /// </summary>
     public static class CPUProcessPatch
     {

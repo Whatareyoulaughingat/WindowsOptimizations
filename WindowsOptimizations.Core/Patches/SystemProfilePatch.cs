@@ -5,7 +5,7 @@ using WindowsOptimizations.Core.GlobalData;
 namespace WindowsOptimizations.Core.Patches
 {
     /// <summary>
-    /// Various kernel patches for optimizing the system profile.
+    /// Various registry changes for optimizing the system profile.
     /// </summary>
     public static class SystemProfilePatch
     {

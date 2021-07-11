@@ -8,7 +8,7 @@ using WindowsOptimizations.Core.GlobalData;
 namespace WindowsOptimizations.Core.Patches
 {
     /// <summary>
-    /// Various kernel and powershell patches that may improve or provide a more stable internet speed.
+    /// Various registry and powershell changes that may improve or provide a more stable internet speed.
     /// </summary>
     public static class NetworkPatch
     {
