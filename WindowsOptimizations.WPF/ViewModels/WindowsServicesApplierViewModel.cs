@@ -4,10 +4,9 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using Microsoft.Win32;
 using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 using WindowsOptimizations.Core.Handlers.Configuration;
 using WindowsOptimizations.Core.Models;
-using WindowsOptimizations.Core.Patches;
+using WindowsOptimizations.Core.Tweaks;
 
 namespace WindowsOptimizations.WPF.ViewModels
 {
@@ -16,17 +15,19 @@ namespace WindowsOptimizations.WPF.ViewModels
     /// </summary>
     public class WindowsServicesApplierViewModel : ReactiveObject
     {
-        /// <summary>
-        /// Gets or sets the observable collection of <see cref="WindowsService"/> model.
-        /// </summary>
-        [Reactive]
-        public ObservableCollection<WindowsService> UnnecessaryServices { get; set; } = new();
+        private ObservableCollection<WindowsService> unnecessaryServices = new();
+        public ObservableCollection<WindowsService> UnnecessaryServices
+        {
+            get { return unnecessaryServices; }
+            set { this.RaiseAndSetIfChanged(ref unnecessaryServices, value); }
+        }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether all unnecessary services are selected or not.
-        /// </summary>
-        [Reactive]
-        public bool HasSelectedAll { get; set; }
+        private bool hasSelectedAll;
+        public bool HasSelectedAll
+        {
+            get { return hasSelectedAll; }
+            set { this.RaiseAndSetIfChanged(ref hasSelectedAll, value); }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowsServicesApplierViewModel"/> class.
@@ -115,7 +116,7 @@ namespace WindowsOptimizations.WPF.ViewModels
                 {
                     if (UnnecessaryServices[i].IsSelected)
                     {
-                        await WindowsServicePatch.DisableService(UnnecessaryServices[i]);
+                        await WindowsServiceTweaks.DisableService(UnnecessaryServices[i]);
                     }
                 }
             });
@@ -130,7 +131,7 @@ namespace WindowsOptimizations.WPF.ViewModels
                 {
                     if (UnnecessaryServices[i].IsSelected)
                     {
-                        await WindowsServicePatch.EnableService(UnnecessaryServices[i]);
+                        await WindowsServiceTweaks.EnableService(UnnecessaryServices[i]);
                     }
                 }
             });
