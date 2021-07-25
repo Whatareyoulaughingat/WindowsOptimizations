@@ -1,7 +1,4 @@
 ﻿using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
-
-#pragma warning disable SA1600
 
 namespace WindowsOptimizations.WPF.ViewModels
 {
@@ -10,23 +7,24 @@ namespace WindowsOptimizations.WPF.ViewModels
     /// </summary>
     public class AboutViewModel : ReactiveObject
     {
-        [Reactive]
-        public string ApplicationLicenseInfo { get; set; }
+        private string applicationLicenseInfo;
+        public string ApplicationLicenseInfo
+        {
+            get { return applicationLicenseInfo; }
+            set { this.RaiseAndSetIfChanged(ref applicationLicenseInfo, value); }
+        }
 
-        [Reactive]
-        public string DisclaimerInfo { get; set; }
-
-        [Reactive]
-        public string AcknowledgementsInfo { get; set; }
+        private string disclaimerInfo;
+        public string DisclaimerInfo
+        {
+            get { return disclaimerInfo; }
+            set { this.RaiseAndSetIfChanged(ref disclaimerInfo, value); }
+        }
 
         public AboutViewModel()
         {
             ApplicationLicenseInfo = "This application is licensed under the MIT license.";
-
-            DisclaimerInfo = "This application is not affliated with Windows10Debloater or SophiaScript or any other application.";
-
-            AcknowledgementsInfo = "Windows10Debloater: https://github.com/Sycnex/Windows10Debloater \n" +
-                                   "SophiaScript: https://github.com/farag2/Windows-10-Sophia-Script";
+            DisclaimerInfo = "This application is not affliated with Windows or Microsoft itself in any way.";
         }
     }
 }

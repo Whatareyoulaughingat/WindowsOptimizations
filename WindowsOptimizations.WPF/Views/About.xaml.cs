@@ -30,12 +30,6 @@ namespace WindowsOptimizations.WPF.Views
                     vmProperty => vmProperty.DisclaimerInfo,
                     viewProperty => viewProperty.Disclaimer.Text)
                 .DisposeWith(disposableRegistration);
-
-                this.OneWayBind(
-                    ViewModel,
-                    vmProperty => vmProperty.AcknowledgementsInfo,
-                    viewProperty => viewProperty.Acknowledgements.Text)
-                .DisposeWith(disposableRegistration);
             });
         }
     }
