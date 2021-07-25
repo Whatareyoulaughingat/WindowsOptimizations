@@ -6,15 +6,9 @@ using System.Windows.Threading;
 using ReactiveUI;
 using WindowsOptimizations.Core.GlobalData;
 using WindowsOptimizations.Core.Managers;
-using WindowsOptimizations.Core.Patches;
-using WindowsOptimizations.Core.Tools;
+using WindowsOptimizations.Core.Tweaks;
 using WindowsOptimizations.WPF.Views;
 
-#pragma warning disable SA1600
-#pragma warning disable SA1201
-#pragma warning disable CA1822
-
-// Source: https://stackoverflow.com/questions/4525854/remove-trailing-zeros --> ToString("G29")
 namespace WindowsOptimizations.WPF.ViewModels
 {
     /// <summary>
@@ -59,17 +53,9 @@ namespace WindowsOptimizations.WPF.ViewModels
             DisableUnnecessaryWindowsServicesCommand = ReactiveCommand.CreateFromTask(async () => await DisableUnnecessaryWindowsServices().ConfigureAwait(false));
             ReduceMouseInputLatencyCommand = ReactiveCommand.CreateFromTask(async () => await ReduceMouseInputLatency().ConfigureAwait(false));
             OptimizeSystemProfileCommand = ReactiveCommand.CreateFromTask(async () => await OptimizeSystemProfile().ConfigureAwait(false));
-            SetSystemTimerToMaximumResolutionCommand = ReactiveCommand.CreateFromTask(async () => await SetSystemTimerToMaximumResolution().ConfigureAwait(false));
-            DebloatWindowsCommand = ReactiveCommand.CreateFromTask(async () => await DebloatWindows().ConfigureAwait(false));
             OptimizeNetworkOptionsCommand = ReactiveCommand.CreateFromTask(async () => await OptimizeNetworkOptions().ConfigureAwait(false));
             ReduceCPUProcessesCommand = ReactiveCommand.CreateFromTask(async () => await ReduceCPUProcesses().ConfigureAwait(false));
             AboutCommand = ReactiveCommand.CreateFromTask(async () => await About().ConfigureAwait(false));
-
-            // Getting timer resolution info and assigning it to the appropriate variables.
-            TimerResolutionPatch.GetTimerResolutionInfo();
-            TimerResolutionMinimumValue = (TimerResolutionPatch.MinimumResolution * 0.0001m).ToString("G29");
-            TimerResolutionMaximumValue = (TimerResolutionPatch.MaximumResolution * 0.0001m).ToString("G29");
-            TimerResolutionCurrentValue = (TimerResolutionPatch.CurrentResolution * 0.0001m).ToString("G29");
         }
 
         public ReactiveCommand<Unit, Unit> DisableUnnecessaryWindowsServicesCommand { get; private set; }
@@ -82,12 +68,12 @@ namespace WindowsOptimizations.WPF.ViewModels
             await Dispatcher.CurrentDispatcher.BeginInvoke(async () =>
             {
                 await Task.WhenAll(
-                    RawMouseInputPatch.DisablePointerAcceleration(),
-                    RawMouseInputPatch.SetPointerSensitivityToDefault(),
-                    RawMouseInputPatch.SetPointerSensitivityToDefault());
+                    RawMouseInputTweaks.DisablePointerAcceleration(),
+                    RawMouseInputTweaks.SetPointerSensitivityToDefault(),
+                    RawMouseInputTweaks.SetPointerSensitivityToDefault());
 
-                patchExecutionCheck.HasReducedMouseInputLatency = true;
-                MessageBox.Show("Operation completed sucessfully.", nameof(SystemProfilePatch), MessageBoxButton.OK, MessageBoxImage.Information);
+                PatchExecutionCheck.HasReducedMouseInputLatency = true;
+                MessageBox.Show("Operation completed sucessfully.", nameof(SystemProfileTweaks), MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }
 
@@ -97,44 +83,13 @@ namespace WindowsOptimizations.WPF.ViewModels
             await Dispatcher.CurrentDispatcher.BeginInvoke(async () =>
             {
                 await Task.WhenAll(
-                    SystemProfilePatch.IncreaseSystemResponsiveness(),
-                    SystemProfilePatch.IncreaseGamePriority(),
-                    SystemProfilePatch.SetSchedulingCategoryToHigh(),
-                    SystemProfilePatch.SetSFIOPriorityToHigh());
+                    SystemProfileTweaks.IncreaseSystemResponsiveness(),
+                    SystemProfileTweaks.IncreaseGamePriority(),
+                    SystemProfileTweaks.SetSchedulingCategoryToHigh(),
+                    SystemProfileTweaks.SetSFIOPriorityToHigh());
 
-                patchExecutionCheck.HasOptimizedSystemProfile = true;
-                MessageBox.Show("Operation completed sucessfully.", nameof(SystemProfilePatch), MessageBoxButton.OK, MessageBoxImage.Information);
-            });
-        }
-
-        public ReactiveCommand<Unit, Unit> SetSystemTimerToMaximumResolutionCommand { get; private set; }
-        public async Task SetSystemTimerToMaximumResolution()
-        {
-            await Dispatcher.CurrentDispatcher.BeginInvoke(async () =>
-            {
-                await Task.WhenAll(
-                    TimerResolutionPatch.GetTimerResolutionInfo(),
-                    TimerResolutionPatch.SetMaximumTimerResolutionValue());
-
-                TimerResolutionMinimumValue = (TimerResolutionPatch.MinimumResolution * 0.0001m).ToString("G29");
-                TimerResolutionMaximumValue = (TimerResolutionPatch.MaximumResolution * 0.0001m).ToString("G29");
-                TimerResolutionCurrentValue = (TimerResolutionPatch.CurrentResolution * 0.0001m).ToString("G29");
-
-                MessageBox.Show("This only works when this application is active. By the time you exit, the timer will return to its default resolution value.", "System Profile Patch", MessageBoxButton.OK, MessageBoxImage.Warning);
-            });
-        }
-
-        public ReactiveCommand<Unit, Unit> DebloatWindowsCommand { get; private set; }
-        public async Task DebloatWindows()
-        {
-            await Dispatcher.CurrentDispatcher.BeginInvoke(async () =>
-            {
-                await Debloater
-                .SetUnrestrictedExecutionPolicy()
-                .ContinueWith(async x => await Debloater.DebloatWindowsFirstPhaseAsync())
-                .ContinueWith(async x => await Debloater.DebloatWindowsSecondPhase());
-
-                patchExecutionCheck.HasDebloatedWindows = true;
+                PatchExecutionCheck.HasOptimizedSystemProfile = true;
+                MessageBox.Show("Operation completed sucessfully.", nameof(SystemProfileTweaks), MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }
 
@@ -144,27 +99,27 @@ namespace WindowsOptimizations.WPF.ViewModels
             await Dispatcher.CurrentDispatcher.BeginInvoke(async () =>
             {
                 await Task.WhenAll(
-                    NetworkPatch.ChangeWindowAutoTuningLevel(),
-                    NetworkPatch.DisableWindowsScalingHeuristics(),
-                    NetworkPatch.ChangeCongestionProvider(),
-                    NetworkPatch.EnableRSS(),
-                    NetworkPatch.EnableRSC(),
-                    NetworkPatch.SetDefaultTTL(),
-                    NetworkPatch.DisableECN(),
-                    NetworkPatch.DisableChecksumOffloading(),
-                    NetworkPatch.DisableTCPChimneyOffload(),
-                    NetworkPatch.DisableLargeSendOffload(),
-                    NetworkPatch.DisableTCP1323Timestamps(),
-                    NetworkPatch.IncreaseHostResolutionPriority(),
-                    NetworkPatch.DecreaseMaxSYNRetransmissions(),
-                    NetworkPatch.DisableNonStackRttResiliency(),
-                    NetworkPatch.DisableNetworkThrottlingIndex(),
-                    NetworkPatch.DisableNaglesAlgorithm(),
-                    NetworkPatch.ChangeNetworkMemoryAllocations(),
-                    NetworkPatch.ConfigureDynamicPortAllocation(),
-                    NetworkPatch.DisableReservableBandwidthLimit());
+                    NetworkTweaks.ChangeWindowAutoTuningLevel(),
+                    NetworkTweaks.DisableWindowsScalingHeuristics(),
+                    NetworkTweaks.ChangeCongestionProvider(),
+                    NetworkTweaks.EnableRSS(),
+                    NetworkTweaks.EnableRSC(),
+                    NetworkTweaks.SetDefaultTTL(),
+                    NetworkTweaks.DisableECN(),
+                    NetworkTweaks.DisableChecksumOffloading(),
+                    NetworkTweaks.DisableTCPChimneyOffload(),
+                    NetworkTweaks.DisableLargeSendOffload(),
+                    NetworkTweaks.DisableTCP1323Timestamps(),
+                    NetworkTweaks.IncreaseHostResolutionPriority(),
+                    NetworkTweaks.DecreaseMaxSYNRetransmissions(),
+                    NetworkTweaks.DisableNonStackRttResiliency(),
+                    NetworkTweaks.DisableNetworkThrottlingIndex(),
+                    NetworkTweaks.DisableNaglesAlgorithm(),
+                    NetworkTweaks.ChangeNetworkMemoryAllocations(),
+                    NetworkTweaks.ConfigureDynamicPortAllocation(),
+                    NetworkTweaks.DisableReservableBandwidthLimit());
 
-                patchExecutionCheck.HasOptimizedNetworkOptions = true;
+                PatchExecutionCheck.HasOptimizedNetworkOptions = true;
                 MessageBox.Show("Operation completed sucessfully.", "Network Patch", MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }
@@ -172,9 +127,9 @@ namespace WindowsOptimizations.WPF.ViewModels
         public ReactiveCommand<Unit, Unit> ReduceCPUProcessesCommand { get; private set; }
         public async Task ReduceCPUProcesses()
         {
-            await Dispatcher.CurrentDispatcher.BeginInvoke(async () => await CPUProcessPatch.LimitSvcHostSplitting());
+            await Dispatcher.CurrentDispatcher.BeginInvoke(async () => await CPUProcessTweaks.LimitSvcHostSplitting());
 
-            patchExecutionCheck.HasReducedCPUProcesses = true;
+            PatchExecutionCheck.HasReducedCPUProcesses = true;
             MessageBox.Show("Operation completed sucessfully.", "CPU Process Patch", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 

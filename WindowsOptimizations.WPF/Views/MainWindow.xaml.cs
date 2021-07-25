@@ -40,18 +40,6 @@ namespace WindowsOptimizations.WPF.Views
 
                 this.BindCommand(
                     ViewModel,
-                    vmProperty => vmProperty.SetSystemTimerToMaximumResolutionCommand,
-                    viewProperty => viewProperty.SetSystemTimerToMaximumResolution)
-                .DisposeWith(disposableRegistration);
-
-                this.BindCommand(
-                    ViewModel,
-                    vmProperty => vmProperty.DebloatWindowsCommand,
-                    viewProperty => viewProperty.DebloatWindows)
-                .DisposeWith(disposableRegistration);
-
-                this.BindCommand(
-                    ViewModel,
                     vmProperty => vmProperty.OptimizeNetworkOptionsCommand,
                     viewProperty => viewProperty.OptimizeNetworkOptions)
                 .DisposeWith(disposableRegistration);
@@ -66,25 +54,6 @@ namespace WindowsOptimizations.WPF.Views
                     ViewModel,
                     vmProperty => vmProperty.AboutCommand,
                     viewProperty => viewProperty.About)
-                .DisposeWith(disposableRegistration);
-
-                // One-way bind the timer resolution labels.
-                this.OneWayBind(
-                    ViewModel,
-                    vmProperty => vmProperty.TimerResolutionMinimumValue,
-                    viewProperty => viewProperty.TimerResolutionMinimumValueLabel.Content)
-                .DisposeWith(disposableRegistration);
-
-                this.OneWayBind(
-                    ViewModel,
-                    vmProperty => vmProperty.TimerResolutionMaximumValue,
-                    viewProperty => viewProperty.TimerResolutionMaximumValueLabel.Content)
-                .DisposeWith(disposableRegistration);
-
-                this.OneWayBind(
-                    ViewModel,
-                    vmProperty => vmProperty.TimerResolutionCurrentValue,
-                    viewProperty => viewProperty.TimerResolutionCurrentValueLabel.Content)
                 .DisposeWith(disposableRegistration);
             });
         }

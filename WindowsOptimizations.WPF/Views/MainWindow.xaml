@@ -50,24 +50,6 @@
                 Content="Optimize System Profile"
                 x:Name="OptimizeSystemProfile" />
 
-        <!--Set timer resoolution to maximum button.-->
-        <Button Width="300"
-                Height="30"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Right"
-                Margin="0, 50, 10, 0"
-                Content="Set System Timer to Maximum Resolution"
-                x:Name="SetSystemTimerToMaximumResolution" />
-
-        <!--Debloat Windows 10.-->
-        <Button Width="300"
-                Height="30"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"
-                Margin="10, 90, 0, 0"
-                Content="Debloat Windows 10 [Use with caution]"
-                x:Name="DebloatWindows" />
-
         <!--Optimize network options button.-->
         <Button Width="300"
                 Height="30"
@@ -85,14 +67,6 @@
                 Margin="10, 130, 0, 0"
                 Content="Reduce CPU Processes"
                 x:Name="ReduceCPUProcesses" />
-
-        <Button Width="300"
-                Height="30"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Right"
-                Margin="0, 130, 10, 0"
-                Content="Enable Meessage Interrupts"
-                x:Name="EnableMessageInterrupts" />
 
         <!--An 'About' button containg licensing information and acknowledgements.-->
         <Button Width="55"
@@ -116,46 +90,5 @@
                 </Viewbox>
             </Button.Content>
         </Button>
-
-        <!--Information about the system's timer.-->
-        <materialDesign:Card Margin="10"
-                             Width="270"
-                             Height="105"
-                             VerticalAlignment="Bottom"
-                             HorizontalAlignment="Right"
-                             Background="{DynamicResource MaterialDesignDarkSeparatorBackground}" Grid.ColumnSpan="2">
-
-            <StackPanel>
-                <Label
-               Width="260"
-               Height="25"
-               Margin="5"
-               VerticalAlignment="Top"
-               HorizontalAlignment="Left"
-               x:Name="TimerResolutionMinimumValueLabel"
-               Foreground="{DynamicResource MaterialDesignDarkForeground}"
-               Background="{DynamicResource MaterialDesignDarkSeparatorBackground}" />
-                
-                <Label
-               Width="260"
-               Height="25"
-               Margin="5"
-               VerticalAlignment="Center"
-               HorizontalAlignment="Left"
-               x:Name="TimerResolutionMaximumValueLabel"
-               Foreground="{DynamicResource MaterialDesignDarkForeground}"
-               Background="{DynamicResource MaterialDesignDarkSeparatorBackground}" />
-
-                <Label
-               Width="260"
-               Height="25"
-               Margin="5"
-               VerticalAlignment="Bottom"
-               HorizontalAlignment="Left"
-               x:Name="TimerResolutionCurrentValueLabel"
-               Foreground="{DynamicResource MaterialDesignDarkForeground}"
-               Background="{DynamicResource MaterialDesignDarkSeparatorBackground}" />
-            </StackPanel>
-        </materialDesign:Card>
     </Grid>
 </reactiveui:ReactiveWindow>
