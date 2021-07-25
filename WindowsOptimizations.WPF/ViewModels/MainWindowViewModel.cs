@@ -37,13 +37,6 @@ namespace WindowsOptimizations.WPF.ViewModels
             set { this.RaiseAndSetIfChanged(ref timerResolutionCurrentValue, $"Current timer resolution value: {value}ms"); }
         }
 
-        private PatchExecutionCheck patchExecutionCheck = new();
-        public PatchExecutionCheck PatchExecutionCheck
-        {
-            get { return patchExecutionCheck; }
-            set { this.RaiseAndSetIfChanged(ref patchExecutionCheck, value); }
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
