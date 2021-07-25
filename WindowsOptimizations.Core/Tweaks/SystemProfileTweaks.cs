@@ -2,15 +2,13 @@
 using Microsoft.Win32;
 using WindowsOptimizations.Core.GlobalData;
 
-namespace WindowsOptimizations.Core.Patches
+namespace WindowsOptimizations.Core.Tweaks
 {
     /// <summary>
     /// Various registry changes for optimizing the system profile.
     /// </summary>
-    public static class SystemProfilePatch
+    public static class SystemProfileTweaks
     {
-        private static readonly RegistryKeys RegistryKeys = new();
-
         /// <summary>
         /// Increases overall system responsiveness.
         /// </summary>
@@ -24,7 +22,7 @@ namespace WindowsOptimizations.Core.Patches
         /// <summary>
         /// Increase the priority a game takes in the system over other applications.
         /// </summary>
-        /// <returns>[<see cref="SystemProfilePatch"/>] An asynchronous operation.</returns>
+        /// <returns>[<see cref="SystemProfileTweaks"/>] An asynchronous operation.</returns>
         public static Task IncreaseGamePriority()
         {
             Registry.SetValue(RegistryKeys.GameTaskSystemProfileKey, "Priority", 6);

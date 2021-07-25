@@ -5,15 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.Win32;
 using WindowsOptimizations.Core.GlobalData;
 
-namespace WindowsOptimizations.Core.Patches
+namespace WindowsOptimizations.Core.Tweaks
 {
     /// <summary>
     /// Various registry and powershell changes that may improve or provide a more stable internet speed.
     /// </summary>
-    public static class NetworkPatch
+    public static class NetworkTweaks
     {
-        private static readonly RegistryKeys RegistryKeys = new();
-
         /// <summary>
         /// Limits throughput, especially in high-speed, high-latency environments, such as most internet connections.
         /// <para>This method sets the auto-tuning level to 'normal'.</para>
@@ -191,7 +189,7 @@ namespace WindowsOptimizations.Core.Patches
         /// <summary>
         /// Sets the number of times to attempt to reestablish a connection with SYN packets.
         /// </summary>
-        /// <returns>[<see cref="NetworkPatch"/>] An asynchronous operation.</returns>
+        /// <returns>[<see cref="NetworkTweaks"/>] An asynchronous operation.</returns>
         public static Task DecreaseMaxSYNRetransmissions()
         {
             using Process powershell = new ();
@@ -221,7 +219,7 @@ namespace WindowsOptimizations.Core.Patches
         /// <summary>
         /// A network throttling mechanism to restrict the processing of non-multimedia network traffic to 10 packets per millisecond.
         /// </summary>
-        /// <returns>[<see cref="NetworkPatch"/>] The same class for allowing method chaining.</returns>
+        /// <returns>[<see cref="NetworkTweaks"/>] The same class for allowing method chaining.</returns>
         public static Task DisableNetworkThrottlingIndex()
         {
             Registry.SetValue(RegistryKeys.SystemProfileKey, "NetworkThrottlingIndex", 0xffffffff);

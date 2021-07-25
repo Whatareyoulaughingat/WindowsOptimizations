@@ -3,15 +3,13 @@ using System.Windows;
 using Microsoft.Win32;
 using WindowsOptimizations.Core.GlobalData;
 
-namespace WindowsOptimizations.Core.Patches
+namespace WindowsOptimizations.Core.Tweaks
 {
     /// <summary>
     /// Various registry changes for reducing mouse input latency.
     /// </summary>
-    public static class RawMouseInputPatch
+    public static class RawMouseInputTweaks
     {
-        private static readonly RegistryKeys RegistryKeys = new();
-
         /// <summary>
         /// Disables pointer acceleration completely by changing specific registry values.
         /// </summary>
@@ -93,7 +91,7 @@ namespace WindowsOptimizations.Core.Patches
                     break;
 
                 default:
-                    MessageBox.Show("Your Windows scaling setting is either higher than 350% or lower than 100%. Cannot set a 1:1 pointer precision because of that.", nameof(RawMouseInputPatch), MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Your Windows scaling setting is either higher than 350% or lower than 100%. Cannot set a 1:1 pointer precision because of that.", nameof(RawMouseInputTweaks), MessageBoxButton.OK, MessageBoxImage.Error);
                     break;
             }
 

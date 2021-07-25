@@ -2,12 +2,12 @@
 using System.Threading.Tasks;
 using WindowsOptimizations.Core.Models;
 
-namespace WindowsOptimizations.Core.Patches
+namespace WindowsOptimizations.Core.Tweaks
 {
     /// <summary>
     /// Handles the way Windows services will run.
     /// </summary>
-    public static class WindowsServicePatch
+    public static class WindowsServiceTweaks
     {
         /// <summary>
         /// Disabled a specific Windows service.
