@@ -16,27 +16,6 @@ namespace WindowsOptimizations.WPF.ViewModels
     /// </summary>
     public class MainWindowViewModel : ReactiveObject
     {
-        private string timerResolutionMinimumValue;
-        public string TimerResolutionMinimumValue
-        {
-            get { return timerResolutionMinimumValue; }
-            set { this.RaiseAndSetIfChanged(ref timerResolutionMinimumValue, $"Minimum timer resolution value: {value}ms"); }
-        }
-
-        private string timerResolutionMaximumValue;
-        public string TimerResolutionMaximumValue
-        {
-            get { return timerResolutionMaximumValue; }
-            set { this.RaiseAndSetIfChanged(ref timerResolutionMaximumValue, $"Maximum timer resolution value: {value}ms"); }
-        }
-
-        private string timerResolutionCurrentValue;
-        public string TimerResolutionCurrentValue
-        {
-            get { return timerResolutionCurrentValue; }
-            set { this.RaiseAndSetIfChanged(ref timerResolutionCurrentValue, $"Current timer resolution value: {value}ms"); }
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
