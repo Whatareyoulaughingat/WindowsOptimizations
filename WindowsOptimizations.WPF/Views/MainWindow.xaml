@@ -11,7 +11,7 @@
         x:TypeArguments="vm:MainWindowViewModel"
         mc:Ignorable="d"
         Title="Windows Optimizations"
-        Height="330"
+        Height="250"
         Width="650"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -55,7 +55,7 @@
                 Height="30"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Right"
-                Margin="0, 90, 10, 0"
+                Margin="0, 50, 10, 0"
                 Content="Optimize Network Options"
                 x:Name="OptimizeNetworkOptions" />
 
@@ -64,7 +64,7 @@
                 Height="30"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
-                Margin="10, 130, 0, 0"
+                Margin="10, 90, 0, 0"
                 Content="Reduce CPU Processes"
                 x:Name="ReduceCPUProcesses" />
 
