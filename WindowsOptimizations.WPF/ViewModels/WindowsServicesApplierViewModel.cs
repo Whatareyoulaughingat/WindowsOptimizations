@@ -60,7 +60,7 @@ namespace WindowsOptimizations.WPF.ViewModels
                     Title = "Select a custom JSON collection",
                     CheckFileExists = true,
                     CheckPathExists = true,
-                    DefaultExt = ".json",
+                    Filter = "JSON File (*.json) | *.json",
                     Multiselect = false,
                 };
 
