@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WindowsOptimizations.Core\WindowsOptimizations.Core.csproj" />
+    <ProjectReference Include="..\WindowsOptimizations.Core\VariousWindowsTweaks.Core.csproj" />
   </ItemGroup>
   
 </Project>
