@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31410.414
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsOptimizations.WPF", "VariousWindowsTweaks.WPF\WindowsOptimizations.WPF.csproj", "{728FD251-CDF4-4DEC-B2EC-EAAF0A76F48F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsOptimizations.WPF", "WindowsOptimizations.WPF\WindowsOptimizations.WPF.csproj", "{728FD251-CDF4-4DEC-B2EC-EAAF0A76F48F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsOptimizations.Core", "VariousWindowsTweaks.Core\WindowsOptimizations.Core.csproj", "{0FD56B4A-1C76-4D31-B4D5-5DD4074BB037}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsOptimizations.Core", "WindowsOptimizations.Core\WindowsOptimizations.Core.csproj", "{0FD56B4A-1C76-4D31-B4D5-5DD4074BB037}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

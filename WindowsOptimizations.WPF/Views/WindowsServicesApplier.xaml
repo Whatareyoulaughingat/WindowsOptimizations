@@ -1,0 +1,102 @@
+﻿<reactiveui:ReactiveWindow
+        x:Class="WindowsOptimizations.WPF.Views.WindowsServicesApplier"
+        x:TypeArguments="vm:WindowsServicesApplierViewModel"
+        xmlns:reactiveui="http://reactiveui.net"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:vm="clr-namespace:WindowsOptimizations.WPF.ViewModels"
+        xmlns:local="clr-namespace:WindowsOptimizations.WPF.Views"
+        mc:Ignorable="d"
+        Title="Windows Services Applier"
+        Height="650"
+        Width="500"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignDarkBackground}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="CanMinimize">
+
+    <Grid>
+        <materialDesign:Card Height="520"
+                             Width="470"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Top"
+                             Margin="10"
+                             Background="{DynamicResource MaterialDesignDarkSeparatorBackground}">
+
+            <ListView Height="490"
+                      Width="450"
+                      x:Name="WindowsServiceCollection">
+                
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Service Name"
+                                        Width="290">
+
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="5"
+                                               Text="{Binding Name}"
+                                               Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="Selected"
+                                        Width="120">
+
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox Margin="5"
+                                              IsChecked="{Binding IsSelected}" />
+
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </materialDesign:Card>
+
+        <CheckBox Height="20"
+                  Width="100"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Bottom"
+                  Margin="5, 50"
+                  Content="Select All"
+                  IsThreeState="False"
+                  x:Name="SelectAllWindowsServices"
+                  Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+
+        <Button Height="30"
+                Width="200"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Margin="5, 45"
+                Content="Use Custom Collection"
+                x:Name="UseCustomJSONCollection" />
+
+        <Button Height="30"
+                Width="200"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Margin="5"
+                Content="Disable Selected Services"
+                x:Name="DisableSelectedServices" />
+
+        <Button Height="30"
+                Width="200"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Margin="5"
+                Content="Enable Selected Services"
+                x:Name="EnableSelectedServices" />
+    </Grid>
+</reactiveui:ReactiveWindow>

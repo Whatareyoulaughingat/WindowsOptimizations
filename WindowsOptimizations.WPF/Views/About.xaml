@@ -1,0 +1,75 @@
+﻿<reactiveui:ReactiveWindow
+        x:Class="WindowsOptimizations.WPF.Views.About"
+        x:TypeArguments="vm:AboutViewModel"
+        xmlns:reactiveui="http://reactiveui.net"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:vm="clr-namespace:WindowsOptimizations.WPF.ViewModels"
+        xmlns:local="clr-namespace:WindowsOptimizations.WPF.Views"
+        mc:Ignorable="d"
+        Title="About"
+        Height="250"
+        Width="500"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignDarkBackground}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+
+            <RowDefinition Height="130" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+
+            <Label Content="License"
+                   Width="80"
+                   Height="30"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="10"
+                   Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                   FontSize="20"/>
+
+            <TextBlock Width="auto"
+                       Height="30"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="10, 5"
+                       Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                       FontSize="16"
+                       x:Name="License" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1">
+            
+            <Label Content="Disclaimer"
+                   Width="110"
+                   Height="30"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="10"
+                   Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                   FontSize="20"/>
+
+            <TextBlock Width="auto"
+                       Height="50"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="10, 5"
+                       Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                       FontSize="16"
+                       TextWrapping="Wrap"
+                       x:Name="Disclaimer" />
+        </StackPanel>
+    </Grid>
+</reactiveui:ReactiveWindow>
