@@ -3,7 +3,7 @@
 namespace WindowsOptimizations.Core.GlobalData
 {
     /// <summary>
-    /// A struct containing various variables that store individual registry key paths used by this application.
+    /// A class containing various variables that store individual registry key paths used by this application.
     /// </summary>
     public static class RegistryKeys
     {
@@ -61,5 +61,15 @@ namespace WindowsOptimizations.Core.GlobalData
         /// Gets the registry key location of the Control folder.
         /// </summary>
         public static string CurrentControlKey => $"{Registry.LocalMachine}\\SYSTEM\\CurrentControlSet\\Control";
+
+        /// <summary>
+        /// Gets the registry key location of the PriorityControl folder.
+        /// </summary>
+        public static string PriorityControlKey => $"{Registry.LocalMachine}\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl";
+
+        /// <summary>
+        /// Gets the registry key location of the GameConfigStore folder.
+        /// </summary>
+        public static string GameConfigStoreKey => $"{Registry.CurrentUser}\\System\\GameConfigStore";
     }
 }
