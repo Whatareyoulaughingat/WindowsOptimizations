@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MaterialDesignThemes" Version="4.2.0-ci3" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.2.1-ci8" />
     <PackageReference Include="ReactiveUI.Events.WPF" Version="15.1.1" />
     <PackageReference Include="ReactiveUI.WPF" Version="16.2.1" />
   </ItemGroup>
