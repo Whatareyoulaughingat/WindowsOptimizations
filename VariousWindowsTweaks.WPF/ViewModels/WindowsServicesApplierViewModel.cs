@@ -1,18 +1,17 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive;
-using System.Threading.Tasks;
-using System.Windows.Threading;
+using System.Reactive.Concurrency;
 using Microsoft.Win32;
 using ReactiveUI;
+using Splat;
 using WindowsOptimizations.Core.Handlers.Configuration;
 using WindowsOptimizations.Core.Models;
-using WindowsOptimizations.Core.Tweaks;
+using WindowsOptimizations.Core.Tweaks.System;
+using System.Reactive.Linq;
 
 namespace WindowsOptimizations.WPF.ViewModels
 {
-    /// <summary>
-    /// The viewmodel of <see cref="Views.WindowsServicesApplier"/>.
-    /// </summary>
     public class WindowsServicesApplierViewModel : ReactiveObject
     {
         private ObservableCollection<WindowsService> unnecessaryServices = new();
@@ -29,31 +28,35 @@ namespace WindowsOptimizations.WPF.ViewModels
             set { this.RaiseAndSetIfChanged(ref hasSelectedAll, value); }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WindowsServicesApplierViewModel"/> class.
-        /// </summary>
+        private WindowsServiceOptimizations WindowsServiceOptimizations { get; set; }
+        private ConfigurationHandler Configuration { get; set; }
+
         public WindowsServicesApplierViewModel()
         {
-            // Create commands.
-            SelectAllCommand = ReactiveCommand.CreateFromTask(async () => await SelectAll().ConfigureAwait(false));
-            UseCustomCollectionCommand = ReactiveCommand.CreateFromTask(async () => await UseCustomCollection().ConfigureAwait(false));
-            DisableSelectedServicesCommand = ReactiveCommand.CreateFromTask(async () => await DisableSelectedServices().ConfigureAwait(false));
-            EnableSelectedServicesCommand = ReactiveCommand.CreateFromTask(async () => await EnableSelectedServices().ConfigureAwait(false));
+            // Get instances from DI.
+            WindowsServiceOptimizations = Locator.Current.GetService<WindowsServiceOptimizations>();
+            Configuration = Locator.Current.GetService<ConfigurationHandler>();
+
+            // Setup commands.
+            SelectAllCommand = ReactiveCommand.Create(SelectAll);
+            UseCustomCollectionCommand = ReactiveCommand.Create(UseCustomCollection);
+            DisableSelectedServicesCommand = ReactiveCommand.Create(DisableSelectedServices);
+            EnableSelectedServicesCommand = ReactiveCommand.Create(EnableSelectedServices);
 
             // Populate the listview.
-            for (int i = 0; i < ConfigurationHandler.WindowsServicesDataInstance.ServiceCollection.Length; i++)
+            foreach (string service in Configuration.CurrentWindowsServicesDataInstance.ServiceCollection)
             {
                 UnnecessaryServices.Add(new WindowsService
                 {
-                    Name = ConfigurationHandler.WindowsServicesDataInstance.ServiceCollection[i],
+                    Name = service,
                 });
             }
         }
 
         public ReactiveCommand<Unit, Unit> UseCustomCollectionCommand { get; private set; }
-        public async Task UseCustomCollection()
+        public void UseCustomCollection()
         {
-            await Dispatcher.CurrentDispatcher.BeginInvoke(async () =>
+            RxApp.MainThreadScheduler.Schedule(() =>
             {
                 OpenFileDialog fileDialog = new()
                 {
@@ -64,75 +67,68 @@ namespace WindowsOptimizations.WPF.ViewModels
                     Multiselect = false,
                 };
 
-                fileDialog.ShowDialog();
+                bool? result = fileDialog.ShowDialog();
 
-                await ConfigurationHandler.DeserializeAsync(fileDialog.FileName);
-
-                // Remove all default items from the collection.
-                for (int i = 0; i < UnnecessaryServices.Count; i++)
+                if (result == true)
                 {
-                    UnnecessaryServices.RemoveAt(i);
-                }
+                    UnnecessaryServices.Clear();
 
-                // Add the new custom items to the collection.
-                for (int i = 0; i < ConfigurationHandler.WindowsServicesDataInstance.ServiceCollection.Length; i++)
-                {
-                    UnnecessaryServices.Add(new WindowsService
+                    // Add the new custom items to the collection.
+                    Configuration.DeserializeAsync(fileDialog.FileName);
+
+                    foreach (string service in Configuration.CurrentWindowsServicesDataInstance.ServiceCollection)
                     {
-                        Name = ConfigurationHandler.WindowsServicesDataInstance.ServiceCollection[i],
-                    });
+                        UnnecessaryServices.Add(new WindowsService
+                        {
+                            Name = service
+                        });
+                    }
                 }
             });
         }
 
         public ReactiveCommand<Unit, Unit> SelectAllCommand { get; private set; }
-        public async Task SelectAll()
+        public void SelectAll()
         {
-            await Dispatcher.CurrentDispatcher.BeginInvoke(() =>
+            RxApp.MainThreadScheduler.Schedule(() =>
             {
                 if (HasSelectedAll)
                 {
-                    for (int i = 0; i < UnnecessaryServices.Count; i++)
+                    foreach (WindowsService service in UnnecessaryServices)
                     {
-                        UnnecessaryServices[i].IsSelected = true;
+                        service.IsSelected = true;
                     }
                 }
                 else
                 {
-                    for (int i = 0; i < UnnecessaryServices.Count; i++)
+                    foreach (WindowsService service in UnnecessaryServices)
                     {
-                        UnnecessaryServices[i].IsSelected = false;
+                        service.IsSelected = false;
                     }
                 }
             });
         }
 
         public ReactiveCommand<Unit, Unit> DisableSelectedServicesCommand { get; private set; }
-        public async Task DisableSelectedServices()
+        public void DisableSelectedServices()
         {
-            await Dispatcher.CurrentDispatcher.BeginInvoke(async () =>
+            RxApp.TaskpoolScheduler.Schedule(() =>
             {
-                for (int i = 0; i < UnnecessaryServices.Count; i++)
+                foreach (WindowsService service in UnnecessaryServices.Where(x => x.IsSelected))
                 {
-                    if (UnnecessaryServices[i].IsSelected)
-                    {
-                        await WindowsServiceTweaks.DisableService(UnnecessaryServices[i]);
-                    }
+                    WindowsServiceOptimizations.DisableService(service);
                 }
             });
         }
 
         public ReactiveCommand<Unit, Unit> EnableSelectedServicesCommand { get; private set; }
-        public async Task EnableSelectedServices()
+        public void EnableSelectedServices()
         {
-            await Dispatcher.CurrentDispatcher.BeginInvoke(async () =>
+            RxApp.TaskpoolScheduler.Schedule(() =>
             {
-                for (int i = 0; i < UnnecessaryServices.Count; i++)
+                foreach (WindowsService service in UnnecessaryServices.Where(x => x.IsSelected))
                 {
-                    if (UnnecessaryServices[i].IsSelected)
-                    {
-                        await WindowsServiceTweaks.EnableService(UnnecessaryServices[i]);
-                    }
+                    WindowsServiceOptimizations.EnableService(service);
                 }
             });
         }
