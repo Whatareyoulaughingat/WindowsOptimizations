@@ -1,5 +1,9 @@
-﻿using System.Reactive.Disposables;
+﻿using System.Diagnostics;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using System.Windows;
 using ReactiveUI;
+using WindowsOptimizations.Core.GlobalData;
 using WindowsOptimizations.WPF.ViewModels;
 
 namespace WindowsOptimizations.WPF.Views
@@ -9,9 +13,6 @@ namespace WindowsOptimizations.WPF.Views
     /// </summary>
     public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MainWindow"/> class.
-        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -22,8 +23,8 @@ namespace WindowsOptimizations.WPF.Views
                 // Bind all buttons of the view to the appropriate commands.
                 this.BindCommand(
                     ViewModel,
-                    vmProperty => vmProperty.DisableUnnecessaryWindowsServicesCommand,
-                    viewProperty => viewProperty.DisableUnnecessaryWindowsServices)
+                    vmProperty => vmProperty.ManageUnnecessaryWindowsServicesCommand,
+                    viewProperty => viewProperty.ManageUnnecessaryWindowsServices)
                 .DisposeWith(disposableRegistration);
 
                 this.BindCommand(
@@ -55,6 +56,25 @@ namespace WindowsOptimizations.WPF.Views
                     vmProperty => vmProperty.AboutCommand,
                     viewProperty => viewProperty.About)
                 .DisposeWith(disposableRegistration);
+
+                this.Events().Closing
+                    .Do(action =>
+                    {
+                        if (PatchExecutionCheck.HasDisabledUnnecessaryWindowsServices ||
+                            PatchExecutionCheck.HasReducedMouseInputLatency ||
+                            PatchExecutionCheck.HasOptimizedSystemProfile ||
+                            PatchExecutionCheck.HasOptimizedNetworkOptions ||
+                            PatchExecutionCheck.HasReducedCPUProcesses ||
+                            PatchExecutionCheck.HasReducedInputLag)
+                        {
+                            MessageBoxResult result = MessageBox.Show("Some changes require a reboot to take effect. Would you like reboot now?", "Windows Optimizations", MessageBoxButton.YesNo, MessageBoxImage.Information);
+
+                            if (result == MessageBoxResult.Yes)
+                            {
+                                Process.Start("shutdown", "/r /t 0").Dispose();
+                            }
+                        }
+                    });
             });
         }
     }
