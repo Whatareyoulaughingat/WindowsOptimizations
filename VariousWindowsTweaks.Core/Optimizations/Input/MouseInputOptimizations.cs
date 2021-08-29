@@ -3,18 +3,18 @@ using System.Windows;
 using Microsoft.Win32;
 using WindowsOptimizations.Core.GlobalData;
 
-namespace WindowsOptimizations.Core.Tweaks
+namespace WindowsOptimizations.Core.Tweaks.Input
 {
     /// <summary>
     /// Various registry changes for reducing mouse input latency.
     /// </summary>
-    public static class RawMouseInputTweaks
+    public class MouseInputOptimizations
     {
         /// <summary>
         /// Disables pointer acceleration completely by changing specific registry values.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task DisablePointerAcceleration()
+        public Task DisablePointerAcceleration()
         {
             Registry.SetValue(RegistryKeys.MouseKey, "MouseSpeed", "0");
             Registry.SetValue(RegistryKeys.MouseKey, "MouseThreshold1", "0");
@@ -27,7 +27,7 @@ namespace WindowsOptimizations.Core.Tweaks
         /// Sets a 1:1 pointer precision based on the windows scaling.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task SetOneToOnePointerPrecision()
+        public Task SetOneToOnePointerPrecision()
         {
             double lastLoadedDpi = double.Parse(Registry.GetValue(RegistryKeys.ThemeManagerKey, "LastLoadedDPI", 96).ToString());
             double scale = 96.00 / lastLoadedDpi;
@@ -91,7 +91,7 @@ namespace WindowsOptimizations.Core.Tweaks
                     break;
 
                 default:
-                    MessageBox.Show("Your Windows scaling setting is either higher than 350% or lower than 100%. Cannot set a 1:1 pointer precision because of that.", nameof(RawMouseInputTweaks), MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Cannot set a 1:1 pointer precision because your Windows scaling setting is either higher than 350% or lower than 100%.", nameof(MouseInputOptimizations), MessageBoxButton.OK, MessageBoxImage.Error);
                     break;
             }
 
@@ -103,7 +103,7 @@ namespace WindowsOptimizations.Core.Tweaks
         /// <para>The default value in the kernel is 10.</para>
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task SetPointerSensitivityToDefault()
+        public Task SetPointerSensitivityToDefault()
         {
             Registry.SetValue(RegistryKeys.MouseKey, "MouseSensitivity", "10");
             return Task.CompletedTask;

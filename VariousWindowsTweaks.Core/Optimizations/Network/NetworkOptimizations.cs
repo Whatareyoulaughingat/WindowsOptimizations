@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 using Microsoft.Win32;
 using WindowsOptimizations.Core.GlobalData;
 
-namespace WindowsOptimizations.Core.Tweaks
+namespace WindowsOptimizations.Core.Tweaks.Network
 {
     /// <summary>
     /// Various registry and powershell changes that may improve or provide a more stable internet speed.
     /// </summary>
-    public static class NetworkTweaks
+    public class NetworkOptimizations
     {
         /// <summary>
         /// Limits throughput, especially in high-speed, high-latency environments, such as most internet connections.
         /// <para>This method sets the auto-tuning level to 'normal'.</para>
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task ChangeWindowAutoTuningLevel()
+        public Task ChangeWindowAutoTuningLevel()
         {
             using Process powershell = new ();
             powershell.StartInfo.FileName = "powershell.exe";
@@ -32,7 +32,7 @@ namespace WindowsOptimizations.Core.Tweaks
         /// Restricts the auto-tuning level.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task DisableWindowsScalingHeuristics()
+        public Task DisableWindowsScalingHeuristics()
         {
             using Process powershell = new ();
             powershell.StartInfo.FileName = "powershell.exe";
@@ -47,7 +47,7 @@ namespace WindowsOptimizations.Core.Tweaks
         /// Changes the TCP congestion provider to CTCP, increasing network speed especially on higher speed network connections. This also may decrease latency (ping).
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task ChangeCongestionProvider()
+        public Task ChangeCongestionProvider()
         {
             Registry.SetValue(RegistryKeys.TCPCongestionProviderKey, "00000000", new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x05, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 });
             Registry.SetValue(RegistryKeys.TCPCongestionProviderKey, "04000000", new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x05, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 });
@@ -59,7 +59,7 @@ namespace WindowsOptimizations.Core.Tweaks
         /// The receive-side scaling setting enables parallelized processing of received packets on multiple processors, while avoiding packet reordering.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task EnableRSS()
+        public Task EnableRSS()
         {
             using Process powershell = new ();
             powershell.StartInfo.FileName = "powershell.exe";
@@ -74,7 +74,7 @@ namespace WindowsOptimizations.Core.Tweaks
         /// Allows the NIC to coalesce multiple TCP/IP packets that arrive within a single interrupt into a single larger packet (up to 64KB).
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task EnableRSC()
+        public Task EnableRSC()
         {
             using Process powershell = new ();
             powershell.StartInfo.FileName = "powershell.exe";
@@ -90,7 +90,7 @@ namespace WindowsOptimizations.Core.Tweaks
         /// A number that's too large (over 128) will cause delay in when lost IP packets are discarded.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task SetDefaultTTL()
+        public Task SetDefaultTTL()
         {
             Registry.SetValue(RegistryKeys.TcpipParametersKey, "DefaultTTL", 64);
             return Task.CompletedTask;
@@ -100,7 +100,7 @@ namespace WindowsOptimizations.Core.Tweaks
         /// A mechanism that provides routers with an alternate method of communicating network congestion. It is aimed to decrease retransmissions.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task DisableECN()
+        public Task DisableECN()
         {
             using Process powershell = new ();
             powershell.StartInfo.FileName = "powershell.exe";
@@ -115,7 +115,7 @@ namespace WindowsOptimizations.Core.Tweaks
         /// Disables checksum offloading.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task DisableChecksumOffloading()
+        public Task DisableChecksumOffloading()
         {
             using Process powershell = new ();
             powershell.StartInfo.FileName = "powershell.exe";
@@ -130,7 +130,7 @@ namespace WindowsOptimizations.Core.Tweaks
         /// Enables Windows to offload all TCP processing for a connection to a network adapter (with proper driver support).
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task DisableTCPChimneyOffload()
+        public Task DisableTCPChimneyOffload()
         {
             using Process powershell = new ();
             powershell.StartInfo.FileName = "powershell.exe";
@@ -145,7 +145,7 @@ namespace WindowsOptimizations.Core.Tweaks
         /// The network adapter hardware is used to complete data segmentation, theoretically faster than operating system software.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task DisableLargeSendOffload()
+        public Task DisableLargeSendOffload()
         {
             using Process powershell = new ();
             powershell.StartInfo.FileName = "powershell.exe";
@@ -161,7 +161,7 @@ namespace WindowsOptimizations.Core.Tweaks
         /// retransmission timeout (RTO) interval.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task DisableTCP1323Timestamps()
+        public Task DisableTCP1323Timestamps()
         {
             using Process powershell = new ();
             powershell.StartInfo.FileName = "powershell.exe";
@@ -176,7 +176,7 @@ namespace WindowsOptimizations.Core.Tweaks
         /// This is intended to increase the priority of DNS/hostname resolution, by increasing the priority of four related processes from their defaults.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task IncreaseHostResolutionPriority()
+        public Task IncreaseHostResolutionPriority()
         {
             Registry.SetValue(RegistryKeys.ServiceProviderKey, "LocalPriority", 4);
             Registry.SetValue(RegistryKeys.ServiceProviderKey, "HostPriority", 5);
@@ -189,8 +189,8 @@ namespace WindowsOptimizations.Core.Tweaks
         /// <summary>
         /// Sets the number of times to attempt to reestablish a connection with SYN packets.
         /// </summary>
-        /// <returns>[<see cref="NetworkTweaks"/>] An asynchronous operation.</returns>
-        public static Task DecreaseMaxSYNRetransmissions()
+        /// <returns>[<see cref="NetworkOptimizations"/>] An asynchronous operation.</returns>
+        public Task DecreaseMaxSYNRetransmissions()
         {
             using Process powershell = new ();
             powershell.StartInfo.FileName = "powershell.exe";
@@ -205,7 +205,7 @@ namespace WindowsOptimizations.Core.Tweaks
         /// Helps slow clients/connections as it makes TCP/IP less aggressive in retransmitting packets when enabled.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task DisableNonStackRttResiliency()
+        public Task DisableNonStackRttResiliency()
         {
             using Process powershell = new ();
             powershell.StartInfo.FileName = "powershell.exe";
@@ -219,8 +219,8 @@ namespace WindowsOptimizations.Core.Tweaks
         /// <summary>
         /// A network throttling mechanism to restrict the processing of non-multimedia network traffic to 10 packets per millisecond.
         /// </summary>
-        /// <returns>[<see cref="NetworkTweaks"/>] The same class for allowing method chaining.</returns>
-        public static Task DisableNetworkThrottlingIndex()
+        /// <returns>[<see cref="NetworkOptimizations"/>] The same class for allowing method chaining.</returns>
+        public Task DisableNetworkThrottlingIndex()
         {
             Registry.SetValue(RegistryKeys.SystemProfileKey, "NetworkThrottlingIndex", 0xffffffff);
             return Task.CompletedTask;
@@ -230,7 +230,7 @@ namespace WindowsOptimizations.Core.Tweaks
         /// Nagle's algorithm is designed to allow several small packets to be combined together into a single, larger packet for more efficient transmissions.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task DisableNaglesAlgorithm()
+        public Task DisableNaglesAlgorithm()
         {
             List<NetworkInterface> networkInterfaces = new ();
 
@@ -275,7 +275,7 @@ namespace WindowsOptimizations.Core.Tweaks
         /// Optimizes the machine as a file server so it would allocate resources accordingly.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task ChangeNetworkMemoryAllocations()
+        public Task ChangeNetworkMemoryAllocations()
         {
             Registry.SetValue(RegistryKeys.MemoryManagementKey, "LargeSystemCache", 0);
             Registry.SetValue(RegistryKeys.MemoryManagementKey, "Size", 1);
@@ -288,7 +288,7 @@ namespace WindowsOptimizations.Core.Tweaks
         /// and decrease the time to wait before reclaiming unused ports.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task ConfigureDynamicPortAllocation()
+        public Task ConfigureDynamicPortAllocation()
         {
             Registry.SetValue(RegistryKeys.TcpipParametersKey, "MaxUserPort", 65534);
             Registry.SetValue(RegistryKeys.TcpipParametersKey, "TcpTimedWaitDelay", 30);
@@ -300,7 +300,7 @@ namespace WindowsOptimizations.Core.Tweaks
         /// Prevents QoS applications from getting priority to 20% of available bandwidth.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task DisableReservableBandwidthLimit()
+        public Task DisableReservableBandwidthLimit()
         {
             Registry.SetValue(RegistryKeys.PschedKey, "NonBestEffortLimit", 0);
             return Task.CompletedTask;

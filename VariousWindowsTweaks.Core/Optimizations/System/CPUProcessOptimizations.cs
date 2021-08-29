@@ -7,18 +7,18 @@ using Microsoft.Win32;
 using WindowsOptimizations.Core.Extensions;
 using WindowsOptimizations.Core.GlobalData;
 
-namespace WindowsOptimizations.Core.Tweaks
+namespace WindowsOptimizations.Core.Tweaks.System
 {
     /// <summary>
     /// Various registry changes that reduce CPU processes thus reducing resource usage.
     /// </summary>
-    public static class CPUProcessTweaks
+    public class CPUProcessOptimizations
     {
         /// <summary>
         /// Limits the splitting threshold of SvcHosts.
         /// </summary>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task LimitSvcHostSplitting()
+        public Task LimitSvcHostSplitting()
         {
             // Get total amount of RAM installed.
             string query = "SELECT Capacity FROM Win32_PhysicalMemory";
@@ -33,40 +33,48 @@ namespace WindowsOptimizations.Core.Tweaks
             // Set the Svc host splitting threshold accoring to the total amount of ram.
             switch (totalRamAmount)
             {
+                case "3.9":
                 case "4.00":
                     Registry.SetValue(RegistryKeys.CurrentControlKey, "SvcHostSplitThresholdInKB", 4194304);
                     break;
 
+                case "5.9":
                 case "6.00":
                     Registry.SetValue(RegistryKeys.CurrentControlKey, "SvcHostSplitThresholdInKB", 6291456);
                     break;
 
+                case "7.9":
                 case "8.00":
                     Registry.SetValue(RegistryKeys.CurrentControlKey, "SvcHostSplitThresholdInKB", 8388608);
                     break;
 
+                case "11.9":
                 case "12.00":
                     Registry.SetValue(RegistryKeys.CurrentControlKey, "SvcHostSplitThresholdInKB", 12582912);
                     break;
 
+                case "16.9":
                 case "16.00":
                     Registry.SetValue(RegistryKeys.CurrentControlKey, "SvcHostSplitThresholdInKB", 16777216);
                     break;
 
+                case "23.9":
                 case "24.00":
                     Registry.SetValue(RegistryKeys.CurrentControlKey, "SvcHostSplitThresholdInKB", 25165824);
                     break;
 
+                case "31.9":
                 case "32.00":
                     Registry.SetValue(RegistryKeys.CurrentControlKey, "SvcHostSplitThresholdInKB", 33554432);
                     break;
 
+                case "63.9":
                 case "64.00":
                     Registry.SetValue(RegistryKeys.CurrentControlKey, "SvcHostSplitThresholdInKB", 67108864);
                     break;
 
                 default:
-                    MessageBox.Show("Your total amount of RAM is either lower than 4GB or bigger than 64GB. This optimization cannot be applied because of that." + totalRamAmount, nameof(CPUProcessTweaks), MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Your total amount of RAM is either lower than 4GB or bigger than 64GB. This optimization cannot be applied because of that." + totalRamAmount, nameof(CPUProcessOptimizations), MessageBoxButton.OK, MessageBoxImage.Error);
                     break;
             }
 

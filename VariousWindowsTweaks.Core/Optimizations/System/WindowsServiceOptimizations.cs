@@ -2,21 +2,21 @@
 using System.Threading.Tasks;
 using WindowsOptimizations.Core.Models;
 
-namespace WindowsOptimizations.Core.Tweaks
+namespace WindowsOptimizations.Core.Tweaks.System
 {
     /// <summary>
     /// Handles the way Windows services will run.
     /// </summary>
-    public static class WindowsServiceTweaks
+    public class WindowsServiceOptimizations
     {
         /// <summary>
         /// Disabled a specific Windows service.
         /// </summary>
         /// <param name="service">The Windows service.</param>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task DisableService(WindowsService service)
+        public Task DisableService(WindowsService service)
         {
-            using Process powershell = new ();
+            using Process powershell = new();
             powershell.StartInfo.FileName = "powershell.exe";
             powershell.StartInfo.CreateNoWindow = true;
             powershell.StartInfo.Arguments = $"Set-Service -Name" + $" \"{service.Name}\" " + "-StartupType Disabled -Status Stopped";
@@ -30,9 +30,9 @@ namespace WindowsOptimizations.Core.Tweaks
         /// </summary>
         /// <param name="service">The Windows service.</param>
         /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public static Task EnableService(WindowsService service)
+        public Task EnableService(WindowsService service)
         {
-            using Process powershell = new ();
+            using Process powershell = new();
             powershell.StartInfo.FileName = "powershell.exe";
             powershell.StartInfo.CreateNoWindow = true;
             powershell.StartInfo.Arguments = $"Set-Service -Name" + $" \"{service.Name}\" " + "-StartupType Manual -Status Running";
