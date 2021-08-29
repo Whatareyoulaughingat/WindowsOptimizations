@@ -5,7 +5,7 @@ namespace WindowsOptimizations.Core.Managers
     /// <summary>
     /// Manages the way views are handled.
     /// </summary>
-    public static class WindowManager
+    public class WindowManager
     {
         /// <summary>
         /// Opens a new window with the specified view and viewmodel as data context while waiting for it to exit.
