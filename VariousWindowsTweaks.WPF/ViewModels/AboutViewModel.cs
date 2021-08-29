@@ -2,9 +2,6 @@
 
 namespace WindowsOptimizations.WPF.ViewModels
 {
-    /// <summary>
-    /// The viewmodel of <see cref="Views.About"/>.
-    /// </summary>
     public class AboutViewModel : ReactiveObject
     {
         private string applicationLicenseInfo;
@@ -24,7 +21,7 @@ namespace WindowsOptimizations.WPF.ViewModels
         public AboutViewModel()
         {
             ApplicationLicenseInfo = "This application is licensed under the MIT license.";
-            DisclaimerInfo = "This application is not affliated with Windows or Microsoft itself in any way.";
+            DisclaimerInfo = "This application is not affiliated with Windows or Microsoft itself in any way.";
         }
     }
 }

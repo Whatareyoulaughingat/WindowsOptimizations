@@ -9,9 +9,6 @@ namespace WindowsOptimizations.WPF.Views
     /// </summary>
     public partial class About : ReactiveWindow<AboutViewModel>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="About"/> class.
-        /// </summary>
         public About()
         {
             InitializeComponent();
