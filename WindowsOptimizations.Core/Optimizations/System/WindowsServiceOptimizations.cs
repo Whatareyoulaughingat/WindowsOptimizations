@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using WindowsOptimizations.Core.Models;
 
-namespace WindowsOptimizations.Core.Tweaks.System
+namespace WindowsOptimizations.Core.Optimizaions.System
 {
     /// <summary>
     /// Handles the way Windows services will run.

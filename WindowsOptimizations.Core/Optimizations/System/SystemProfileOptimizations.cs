@@ -2,7 +2,7 @@
 using Microsoft.Win32;
 using WindowsOptimizations.Core.GlobalData;
 
-namespace WindowsOptimizations.Core.Tweaks.System
+namespace WindowsOptimizations.Core.Optimizaions.System
 {
     /// <summary>
     /// Various registry changes for optimizing the system profile.

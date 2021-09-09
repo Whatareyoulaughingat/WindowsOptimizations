@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Win32;
 using WindowsOptimizations.Core.GlobalData;
 
-namespace WindowsOptimizations.Core.Tweaks.Network
+namespace WindowsOptimizations.Core.Optimizaions.Network
 {
     /// <summary>
     /// Various registry and powershell changes that may improve or provide a more stable internet speed.

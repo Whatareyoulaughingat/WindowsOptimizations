@@ -3,7 +3,7 @@ using System.Windows;
 using Microsoft.Win32;
 using WindowsOptimizations.Core.GlobalData;
 
-namespace WindowsOptimizations.Core.Tweaks.Input
+namespace WindowsOptimizations.Core.Optimizaions.Input
 {
     /// <summary>
     /// Various registry changes for reducing mouse input latency.
