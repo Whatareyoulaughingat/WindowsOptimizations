@@ -7,7 +7,7 @@ using ReactiveUI;
 using Splat;
 using WindowsOptimizations.Core.Handlers.Configuration;
 using WindowsOptimizations.Core.Models;
-using WindowsOptimizations.Core.Tweaks.System;
+using WindowsOptimizations.Core.Optimizaions.System;
 using System.Reactive.Linq;
 
 namespace WindowsOptimizations.WPF.ViewModels
