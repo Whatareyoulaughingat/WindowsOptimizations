@@ -6,14 +6,14 @@ using WindowsOptimizations.Core.Handlers.Configuration.Data;
 namespace WindowsOptimizations.Core.Handlers.Configuration
 {
     /// <summary>
-    /// Handles the way JSON serialization and deserialization works.
+    /// Handles JSON/.NET serialization and deserialization.
     /// </summary>
     public class ConfigurationHandler
     {
         /// <summary>
-        /// Gets or sets a value indicating the instance of <see cref="WindowsServicesData"/>.
+        /// Gets or sets the instance of <see cref="WindowsServicesData"/>.
         /// </summary>
-        public WindowsServicesData CurrentWindowsServicesDataInstance { get; set; }
+        public WindowsServicesData CurrentWindowsServicesDataInstance { get; private protected set; }
 
         /// <summary>
         /// If the specified file path doesn't exist, creates a new one, serializes it and then deserializes it right after.
