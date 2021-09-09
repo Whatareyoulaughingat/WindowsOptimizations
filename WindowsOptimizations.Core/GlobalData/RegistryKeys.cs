@@ -3,7 +3,7 @@
 namespace WindowsOptimizations.Core.GlobalData
 {
     /// <summary>
-    /// A class containing various variables that store individual registry key paths used by this application.
+    /// A static class containing various variables that store individual registry key paths used by this application.
     /// </summary>
     public static class RegistryKeys
     {
@@ -71,5 +71,15 @@ namespace WindowsOptimizations.Core.GlobalData
         /// Gets the registry key location of the GameConfigStore folder.
         /// </summary>
         public static string GameConfigStoreKey => $"{Registry.CurrentUser}\\System\\GameConfigStore";
+
+        /// <summary>
+        /// Gets or sets the registry key location of the NvidiaParameters folder.
+        /// </summary>
+        public static string NvidiaParameters => $"{Registry.LocalMachine}\\SYSTEM\\CurrentControlSet\\Services\\nvlddmkm\\Parameters";
+
+        /// <summary>
+        /// Gets or sets the registry key location of the AmdParameters folder.
+        /// </summary>
+        public static string AmdParameters => $"{Registry.LocalMachine}\\SYSTEM\\CurrentControlSet\\Services\\amdkmdap\\Parameters";
     }
 }

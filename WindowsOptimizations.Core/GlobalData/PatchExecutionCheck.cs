@@ -1,7 +1,7 @@
 ﻿namespace WindowsOptimizations.Core.GlobalData
 {
     /// <summary>
-    /// A class containg various checks for every patch that requires a system reboot.
+    /// A static class containg various checks for every patch that requires a system reboot.
     /// </summary>
     public static class PatchExecutionCheck
     {
@@ -29,6 +29,11 @@
         /// Gets or sets a value indicating whether or not the user has optimized the way CPU processes are handled and reduced by using this application.
         /// </summary>
         public static bool HasReducedCPUProcesses { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether or not the user has increased the GPU thread priority.
+        /// </summary>
+        public static bool HasIncreaseGpuThreadPriority { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether or not the user has reduced the input lag by using this application.

@@ -4,7 +4,7 @@ using System.IO;
 namespace WindowsOptimizations.Core.GlobalData
 {
     /// <summary>
-    /// A class containing directory and file paths to be used for this application.
+    /// A static class containing directory and file paths to be used for this application.
     /// </summary>
     public static class Paths
     {
