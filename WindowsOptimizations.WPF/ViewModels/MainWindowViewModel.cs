@@ -7,26 +7,30 @@ using WindowsOptimizations.Core.GlobalData;
 using WindowsOptimizations.Core.Handlers.Configuration;
 using WindowsOptimizations.Core.Managers;
 using WindowsOptimizations.Core.Optimizations.Input;
-using WindowsOptimizations.Core.Tweaks.Input;
-using WindowsOptimizations.Core.Tweaks.Network;
-using WindowsOptimizations.Core.Tweaks.System;
+using WindowsOptimizations.Core.Optimizaions.Input;
+using WindowsOptimizations.Core.Optimizaions.Network;
+using WindowsOptimizations.Core.Optimizaions.System;
 using WindowsOptimizations.WPF.Views;
+using WindowsOptimizations.Core.Optimizations.System;
 
 namespace WindowsOptimizations.WPF.ViewModels
 {
     public class MainWindowViewModel : ReactiveObject
     {
-        private CPUProcessOptimizations CPUProcessTweaks { get; set; }
+        private CpuProcessOptimizations CPUProcessTweaks { get; set; }
+        private GpuThreadPriorityOptimizations GpuThreadPriorityTweaks { get; set; }
         private MouseInputOptimizations MouseInputTweaks { get; set; }
         private InputLagOptimizations InputLagTweaks { get; set; }
         private NetworkOptimizations NetworkTweaks { get; set; }
         private SystemProfileOptimizations SystemProfileTweaks { get; set; }
+
         private ConfigurationHandler Configuration { get; set; }
 
         public MainWindowViewModel()
         {
             // Setup DI.
-            Locator.CurrentMutable.RegisterConstant(new CPUProcessOptimizations());
+            Locator.CurrentMutable.RegisterConstant(new CpuProcessOptimizations());
+            Locator.CurrentMutable.RegisterConstant(new GpuThreadPriorityOptimizations());
             Locator.CurrentMutable.RegisterConstant(new MouseInputOptimizations());
             Locator.CurrentMutable.RegisterConstant(new InputLagOptimizations());
             Locator.CurrentMutable.RegisterConstant(new NetworkOptimizations());
@@ -34,7 +38,8 @@ namespace WindowsOptimizations.WPF.ViewModels
             Locator.CurrentMutable.RegisterConstant(new WindowsServiceOptimizations());
             Locator.CurrentMutable.RegisterConstant(new ConfigurationHandler());
 
-            CPUProcessTweaks = Locator.Current.GetService<CPUProcessOptimizations>();
+            CPUProcessTweaks = Locator.Current.GetService<CpuProcessOptimizations>();
+            GpuThreadPriorityTweaks = Locator.Current.GetService<GpuThreadPriorityOptimizations>();
             MouseInputTweaks = Locator.Current.GetService<MouseInputOptimizations>();
             InputLagTweaks = Locator.Current.GetService<InputLagOptimizations>();
             NetworkTweaks = Locator.Current.GetService<NetworkOptimizations>();
@@ -50,6 +55,7 @@ namespace WindowsOptimizations.WPF.ViewModels
             OptimizeSystemProfileCommand = ReactiveCommand.Create(OptimizeSystemProfile);
             OptimizeNetworkOptionsCommand = ReactiveCommand.Create(OptimizeNetworkOptions);
             ReduceCPUProcessesCommand = ReactiveCommand.Create(ReduceCPUProcesses);
+            IncreaseGpuThreadPriorityCommand = ReactiveCommand.Create(IncreaseGpuThreadPriority);
             AboutCommand = ReactiveCommand.Create(About);
         }
 
@@ -136,6 +142,15 @@ namespace WindowsOptimizations.WPF.ViewModels
 
             PatchExecutionCheck.HasReducedInputLag = true;
             MessageBox.Show("Operation completed sucessfully.", "Input Lag Optimizations", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        public ReactiveCommand<Unit, Unit> IncreaseGpuThreadPriorityCommand { get; private set; }
+        public void IncreaseGpuThreadPriority()
+        {
+            RxApp.TaskpoolScheduler.Schedule(() => GpuThreadPriorityTweaks.IncreaseThreadPriority());
+
+            PatchExecutionCheck.HasIncreaseGpuThreadPriority = true;
+            MessageBox.Show("Operation completed sucessfully.", "GPU Thread Priority Optimizations", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         public ReactiveCommand<Unit, Unit> AboutCommand { get; private set; }
