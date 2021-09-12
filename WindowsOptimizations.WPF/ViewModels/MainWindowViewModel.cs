@@ -55,6 +55,7 @@ namespace WindowsOptimizations.WPF.ViewModels
             OptimizeSystemProfileCommand = ReactiveCommand.Create(OptimizeSystemProfile);
             OptimizeNetworkOptionsCommand = ReactiveCommand.Create(OptimizeNetworkOptions);
             ReduceCPUProcessesCommand = ReactiveCommand.Create(ReduceCPUProcesses);
+            ReduceInputLagCommand = ReactiveCommand.Create(ReduceInputLag);
             IncreaseGpuThreadPriorityCommand = ReactiveCommand.Create(IncreaseGpuThreadPriority);
             AboutCommand = ReactiveCommand.Create(About);
         }

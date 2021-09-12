@@ -53,6 +53,12 @@ namespace WindowsOptimizations.WPF.Views
 
                 this.BindCommand(
                     ViewModel,
+                    vmProperty => vmProperty.ReduceInputLagCommand,
+                    viewProperty => viewProperty.ReduceInputLag)
+                .DisposeWith(disposableRegistration);
+
+                this.BindCommand(
+                    ViewModel,
                     vmProperty => vmProperty.AboutCommand,
                     viewProperty => viewProperty.About)
                 .DisposeWith(disposableRegistration);
