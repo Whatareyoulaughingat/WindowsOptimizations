@@ -56,6 +56,12 @@ namespace WindowsOptimizations.WPF.Views
                     vmProperty => vmProperty.ReduceInputLagCommand,
                     viewProperty => viewProperty.ReduceInputLag)
                 .DisposeWith(disposableRegistration);
+                
+                this.BindCommand(
+                    ViewModel,
+                    vmProperty => vmProperty.IncreaseGpuThreadPriorityCommand,
+                    viewProperty => viewProperty.IncreaseGpuThreadPriority)
+                .DisposeWith(disposableRegistration);
 
                 this.BindCommand(
                     ViewModel,
