@@ -1,8 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Windows;
 using Microsoft.Win32;
 using WindowsOptimizations.Core.GlobalData;
 
-namespace WindowsOptimizations.Core.Optimizaions.System
+namespace WindowsOptimizations.Core.Optimizations.System
 {
     /// <summary>
     /// Various registry changes for optimizing the system profile.
@@ -12,41 +13,73 @@ namespace WindowsOptimizations.Core.Optimizaions.System
         /// <summary>
         /// Increases overall system responsiveness.
         /// </summary>
-        /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public Task IncreaseSystemResponsiveness()
+        /// <returns>[<see cref="bool"/>] A completion result.</returns>
+        public bool IncreaseSystemResponsiveness()
         {
-            Registry.SetValue(RegistryKeys.SystemProfileKey, "SystemResponsiveness", 1);
-            return Task.CompletedTask;
+            try
+            {
+                Registry.SetValue(RegistryKeys.SystemProfileKey, "SystemResponsiveness", 1);
+                return true;
+            }
+            catch (Exception ax)
+            {
+                MessageBox.Show($"An exception has occured! Error message: {ax.Message}");
+                return false;
+            }
         }
 
         /// <summary>
         /// Increase the priority a game takes in the system over other applications.
         /// </summary>
-        /// <returns>[<see cref="SystemProfileOptimizations"/>] An asynchronous operation.</returns>
-        public Task IncreaseGamePriority()
+        /// <returns>[<see cref="bool"/>] A completion result.</returns>
+        public bool IncreaseGamePriority()
         {
-            Registry.SetValue(RegistryKeys.GameTaskSystemProfileKey, "Priority", 6);
-            return Task.CompletedTask;
+            try
+            {
+                Registry.SetValue(RegistryKeys.GameTaskSystemProfileKey, "Priority", 6);
+                return true;
+            }
+            catch (Exception ax)
+            {
+                MessageBox.Show($"An exception has occured! Error message: {ax.Message}");
+                return false;
+            }
         }
 
         /// <summary>
         /// Sets the scheducling category from normal to high. Will increase system responsiveness in general.
         /// </summary>
-        /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public Task SetSchedulingCategoryToHigh()
+        /// <returns>[<see cref="bool"/>] A completion result.</returns>
+        public bool SetSchedulingCategoryToHigh()
         {
-            Registry.SetValue(RegistryKeys.GameTaskSystemProfileKey, "Scheduling Category", "High");
-            return Task.CompletedTask;
+            try
+            {
+                Registry.SetValue(RegistryKeys.GameTaskSystemProfileKey, "Scheduling Category", "High");
+                return true;
+            }
+            catch (Exception ax)
+            {
+                MessageBox.Show($"An exception has occured! Error message: {ax.Message}");
+                return false;
+            }
         }
 
         /// <summary>
         /// Sets the SFIO priority from normal to high.
         /// </summary>
-        /// <returns>[<see cref="Task"/>] An asynchronous operation.</returns>
-        public Task SetSFIOPriorityToHigh()
+        /// <returns>[<see cref="bool"/>] A completion result.</returns>
+        public bool SetSFIOPriorityToHigh()
         {
-            Registry.SetValue(RegistryKeys.GameTaskSystemProfileKey, "SFIO Priority", "High");
-            return Task.CompletedTask;
+            try
+            {
+                Registry.SetValue(RegistryKeys.GameTaskSystemProfileKey, "SFIO Priority", "High");
+                return true;
+            }
+            catch (Exception ax)
+            {
+                MessageBox.Show($"An exception has occured! Error message: {ax.Message}");
+                return false;
+            }
         }
     }
 }
