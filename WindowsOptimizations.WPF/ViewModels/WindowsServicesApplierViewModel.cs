@@ -7,8 +7,9 @@ using ReactiveUI;
 using Splat;
 using WindowsOptimizations.Core.Handlers.Configuration;
 using WindowsOptimizations.Core.Models;
-using WindowsOptimizations.Core.Optimizaions.System;
+using WindowsOptimizations.Core.Optimizations.System;
 using System.Reactive.Linq;
+using WindowsOptimizations.Core.Extensions;
 
 namespace WindowsOptimizations.WPF.ViewModels
 {
@@ -28,15 +29,11 @@ namespace WindowsOptimizations.WPF.ViewModels
             set { this.RaiseAndSetIfChanged(ref hasSelectedAll, value); }
         }
 
-        private WindowsServiceOptimizations WindowsServiceOptimizations { get; set; }
-        private ConfigurationHandler Configuration { get; set; }
+        private WindowsServiceOptimizations WindowsServiceOptimizations { get; set; } = Locator.GetLocator().GetAnyService<WindowsServiceOptimizations>();
+        private ConfigurationHandler Configuration { get; set; } = Locator.GetLocator().GetAnyService<ConfigurationHandler>();
 
         public WindowsServicesApplierViewModel()
         {
-            // Get instances from DI.
-            WindowsServiceOptimizations = Locator.Current.GetService<WindowsServiceOptimizations>();
-            Configuration = Locator.Current.GetService<ConfigurationHandler>();
-
             // Setup commands.
             SelectAllCommand = ReactiveCommand.Create(SelectAll);
             UseCustomCollectionCommand = ReactiveCommand.Create(UseCustomCollection);

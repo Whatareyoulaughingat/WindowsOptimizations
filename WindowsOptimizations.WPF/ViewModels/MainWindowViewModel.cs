@@ -7,49 +7,30 @@ using WindowsOptimizations.Core.GlobalData;
 using WindowsOptimizations.Core.Handlers.Configuration;
 using WindowsOptimizations.Core.Managers;
 using WindowsOptimizations.Core.Optimizations.Input;
-using WindowsOptimizations.Core.Optimizaions.Input;
-using WindowsOptimizations.Core.Optimizaions.Network;
-using WindowsOptimizations.Core.Optimizaions.System;
-using WindowsOptimizations.WPF.Views;
 using WindowsOptimizations.Core.Optimizations.System;
+using WindowsOptimizations.WPF.Views;
+using WindowsOptimizations.Core.Optimizations.Network;
+using WindowsOptimizations.Core.Extensions;
 
 namespace WindowsOptimizations.WPF.ViewModels
 {
     public class MainWindowViewModel : ReactiveObject
     {
-        private CpuProcessOptimizations CPUProcessTweaks { get; set; }
-        private GpuThreadPriorityOptimizations GpuThreadPriorityTweaks { get; set; }
-        private MouseInputOptimizations MouseInputTweaks { get; set; }
-        private InputLagOptimizations InputLagTweaks { get; set; }
-        private NetworkOptimizations NetworkTweaks { get; set; }
-        private SystemProfileOptimizations SystemProfileTweaks { get; set; }
+        private CpuProcessOptimizations CPUProcessTweaks { get; set; } = Locator.GetLocator().GetAnyService<CpuProcessOptimizations>();
+        private GpuThreadPriorityOptimizations GpuThreadPriorityTweaks { get; set; } = Locator.GetLocator().GetAnyService<GpuThreadPriorityOptimizations>();
+        private MouseInputOptimizations MouseInputTweaks { get; set; } = Locator.GetLocator().GetAnyService<MouseInputOptimizations>();
+        private InputLagOptimizations InputLagTweaks { get; set; } = Locator.GetLocator().GetAnyService<InputLagOptimizations>();
+        private NetworkOptimizations NetworkTweaks { get; set; } = Locator.GetLocator().GetAnyService<NetworkOptimizations>();
+        private SystemProfileOptimizations SystemProfileTweaks { get; set; } = Locator.GetLocator().GetAnyService<SystemProfileOptimizations>();
 
-        private ConfigurationHandler Configuration { get; set; }
+        private ConfigurationHandler Configuration { get; set; } = Locator.GetLocator().GetAnyService<ConfigurationHandler>();
 
         public MainWindowViewModel()
         {
-            // Setup DI.
-            Locator.CurrentMutable.RegisterConstant(new CpuProcessOptimizations());
-            Locator.CurrentMutable.RegisterConstant(new GpuThreadPriorityOptimizations());
-            Locator.CurrentMutable.RegisterConstant(new MouseInputOptimizations());
-            Locator.CurrentMutable.RegisterConstant(new InputLagOptimizations());
-            Locator.CurrentMutable.RegisterConstant(new NetworkOptimizations());
-            Locator.CurrentMutable.RegisterConstant(new SystemProfileOptimizations());
-            Locator.CurrentMutable.RegisterConstant(new WindowsServiceOptimizations());
-            Locator.CurrentMutable.RegisterConstant(new ConfigurationHandler());
-
-            CPUProcessTweaks = Locator.Current.GetService<CpuProcessOptimizations>();
-            GpuThreadPriorityTweaks = Locator.Current.GetService<GpuThreadPriorityOptimizations>();
-            MouseInputTweaks = Locator.Current.GetService<MouseInputOptimizations>();
-            InputLagTweaks = Locator.Current.GetService<InputLagOptimizations>();
-            NetworkTweaks = Locator.Current.GetService<NetworkOptimizations>();
-            SystemProfileTweaks = Locator.Current.GetService<SystemProfileOptimizations>();
-            Configuration = Locator.Current.GetService<ConfigurationHandler>();
-
             // Serialize and deserialize the unnecessary windows service file.
             Configuration.SerializeOnCreationAndDeserialize(Paths.DefaultUnnecessaryWindowsServicesJsonFile);
 
-            // Setting up the commands.
+            // Setup commands.
             ManageUnnecessaryWindowsServicesCommand = ReactiveCommand.Create(DisableUnnecessaryWindowsServices);
             ReduceMouseInputLatencyCommand = ReactiveCommand.Create(ReduceMouseInputLatency);
             OptimizeSystemProfileCommand = ReactiveCommand.Create(OptimizeSystemProfile);
